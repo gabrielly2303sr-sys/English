@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08124a">
+<title>ENGLISH // 9TH GRADE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#071b73;
+  --deep:#06134d;
+  --blue:#0646d8;
+  --cyan:#16cfff;
+  --ice:#dff9ff;
+  --paper:#fbfbf6;
+  --slate:#8d929f;
+  --muted:#5f6877;
+  --red:#f12c45;
+  --lime:#9dff00;
+  --shadow:rgba(3,12,70,.35);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease2:cubic-bezier(.7,0,.2,1);
+  --ui:'Barlow Condensed','Helvetica Neue',sans-serif;
+  --display:'Anton','Barlow Condensed','Helvetica Neue',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;background:#03114a;color:#fff;overflow:hidden}
+body{font-family:var(--ui);letter-spacing:.015em;user-select:none}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+#app{position:relative;width:100%;height:100%;overflow:hidden;background:linear-gradient(125deg,#04125a 0%,#0a41bd 50%,#062577 100%)}
+#bgCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.bg-wash{position:absolute;inset:-20%;background:
+  radial-gradient(circle at 75% 15%,rgba(35,222,255,.2),transparent 25%),
+  radial-gradient(circle at 20% 85%,rgba(0,114,255,.18),transparent 34%);
+  z-index:1;pointer-events:none;animation:wash 12s ease-in-out infinite alternate}
+.noise{position:absolute;inset:0;z-index:20;pointer-events:none;opacity:.08;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");animation:noise .28s steps(2) infinite}
+.scanlines{position:absolute;inset:0;z-index:19;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px);mix-blend-mode:soft-light}
+.geo{position:absolute;z-index:2;pointer-events:none}
+.geo.a{width:48vw;height:30vh;left:-8vw;top:-7vh;background:rgba(255,255,255,.97);clip-path:polygon(0 0,76% 0,100% 55%,27% 85%);transform:rotate(-7deg);opacity:.97}
+.geo.b{width:38vw;height:23vh;right:-11vw;top:13vh;background:rgba(255,255,255,.94);clip-path:polygon(16% 0,100% 32%,68% 100%,0 72%);transform:rotate(5deg);opacity:.76}
+.geo.c{width:48vw;height:12vh;left:-9vw;bottom:7vh;background:#fff;clip-path:polygon(0 35%,92% 0,100% 68%,18% 100%);transform:rotate(-5deg);opacity:.92}
+.geo.d{width:27vw;height:17vh;right:-8vw;bottom:-4vh;background:rgba(255,255,255,.92);clip-path:polygon(18% 0,100% 18%,87% 100%,0 70%);transform:rotate(-6deg)}
+.app-chrome{position:absolute;inset:0;z-index:5;pointer-events:none}
+.topline{position:absolute;left:4vw;right:4vw;top:22px;height:2px;background:rgba(255,255,255,.3)}
+.topline:after{content:"";position:absolute;left:0;top:-1px;width:17%;height:4px;background:var(--cyan);box-shadow:0 0 20px rgba(22,207,255,.65)}
+.top-left{position:absolute;left:4vw;top:35px;display:flex;align-items:center;gap:12px;font-size:12px;font-weight:900;letter-spacing:.25em;text-transform:uppercase;opacity:.8}
+.top-left .dot{width:8px;height:8px;background:var(--cyan);transform:skew(-25deg)}
+.top-right{position:absolute;right:4vw;top:31px;font-size:11px;letter-spacing:.18em;font-weight:900;opacity:.66}
+.screen{position:absolute;inset:0;z-index:4;padding:7vh 6vw 6vh;opacity:0;pointer-events:none;transform:translate3d(4vw,0,0) skewX(-1.5deg);transition:opacity .42s var(--ease),transform .62s var(--ease)}
+.screen.active{opacity:1;pointer-events:auto;transform:translate3d(0,0,0) skewX(0deg)}
+.screen.enter-left{animation:screenEnterLeft .7s var(--ease)}
+@keyframes screenEnterLeft{0%{opacity:0;transform:translateX(-10vw) skewX(6deg)}100%{opacity:1;transform:none}}
+@keyframes wash{to{transform:translate3%,-2% scale(1.06)}}
+@keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(1%,-1%)}50%{transform:translate(-1%,1%)}75%{transform:translate(1%,1%)}100%{transform:translate(-1%,-1%)}}
+
+/* HOME */
+#home{padding-top:5vh}
+.brand-stack{position:absolute;left:6vw;top:12vh;max-width:75vw;transform:rotate(-4deg);transform-origin:left center}
+.brand-kicker{font-size:clamp(12px,1.3vw,18px);font-weight:900;letter-spacing:.32em;text-transform:uppercase;color:#fff;display:inline-block;background:var(--red);padding:5px 10px;transform:skewX(-16deg);box-shadow:9px 8px 0 rgba(4,19,87,.5);animation:popIn .7s var(--ease) both}
+.brand-title{font-family:var(--display);font-size:clamp(58px,10.4vw,150px);line-height:.8;letter-spacing:-.04em;text-transform:uppercase;color:#fff;text-shadow:14px 14px 0 rgba(3,27,115,.48);margin-top:18px;animation:brandIn .9s var(--ease) .08s both}
+.brand-title .slash{color:var(--red);display:inline-block;transform:skewX(-14deg) translateY(-2%)}
+.brand-sub{font-weight:900;font-size:clamp(16px,2vw,29px);letter-spacing:.19em;margin-top:18px;color:#d9fbff;animation:slideIn .7s var(--ease) .22s both}
+.brand-sub span{color:var(--cyan)}
+@keyframes brandIn{0%{opacity:0;transform:translateX(-80px) scale(.82);filter:blur(12px)}65%{opacity:1;transform:translateX(15px) scale(1.02);filter:blur(0)}100%{transform:none}}
+@keyframes slideIn{0%{opacity:0;transform:translateX(-50px)}100%{opacity:1;transform:none}}
+@keyframes popIn{0%{opacity:0;transform:skewX(-16deg) translateX(-30px) scale(.7)}100%{opacity:1;transform:skewX(-16deg)}}
+.menu-wrap{position:absolute;left:7vw;bottom:11vh;display:grid;gap:5px;transform:rotate(-3deg)}
+.menu-item{position:relative;display:flex;align-items:center;gap:17px;min-width:min(45vw,500px);padding:11px 18px 11px 13px;border:0;background:transparent;color:#fff;text-align:left;cursor:pointer;overflow:visible;transition:transform .26s var(--ease),filter .26s ease}
+.menu-item:before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:#fff;clip-path:polygon(0 0,100% 0,86% 100%,0 100%);transition:width .3s var(--ease)}
+.menu-item:after{content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:rgba(255,255,255,.25);transform:skewX(-18deg);transform-origin:left;transition:transform .35s var(--ease),background .2s}
+.menu-item .num{position:relative;z-index:2;font-weight:900;font-size:12px;color:var(--cyan);width:25px;opacity:.75}
+.menu-item .label{position:relative;z-index:2;font-family:var(--display);font-size:clamp(27px,3.5vw,48px);letter-spacing:-.01em;line-height:.95;text-shadow:4px 4px 0 rgba(2,26,119,.55);transition:color .24s ease,transform .3s var(--ease),text-shadow .24s}
+.menu-item .mini{position:relative;z-index:2;margin-left:auto;font-size:10px;letter-spacing:.2em;font-weight:900;opacity:.6;transform:translateX(8px);transition:transform .3s var(--ease),opacity .25s}
+.menu-item:hover,.menu-item.selected{transform:translateX(19px)}
+.menu-item:hover:before,.menu-item.selected:before{width:11px}
+.menu-item:hover:after,.menu-item.selected:after{transform:scaleX(.22);background:var(--cyan)}
+.menu-item:hover .label,.menu-item.selected .label{color:#fff;transform:translateX(8px) skewX(-6deg);text-shadow:7px 7px 0 rgba(0,13,83,.52)}
+.menu-item:hover .mini,.menu-item.selected .mini{opacity:1;transform:none}
+.home-readout{position:absolute;right:6vw;bottom:8vh;width:min(27vw,330px);min-width:230px;transform:rotate(-6deg);font-size:11px;line-height:1.5;text-transform:uppercase;letter-spacing:.1em;opacity:.76}
+.home-readout .bar{height:7px;background:#fff;clip-path:polygon(0 0,100% 0,95% 100%,0 100%);margin-bottom:12px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
+.home-readout .bar b{display:block;height:100%;width:68%;background:var(--cyan);box-shadow:0 0 15px rgba(22,207,255,.7)}
+.corners{position:absolute;inset:7vh 5vw 4vh;pointer-events:none}
+.corner{position:absolute;width:40px;height:40px;border-color:rgba(255,255,255,.55);border-style:solid}
+.corner.tl{left:0;top:0;border-width:2px 0 0 2px}.corner.tr{right:0;top:0;border-width:2px 2px 0 0}.corner.bl{left:0;bottom:0;border-width:0 0 2px 2px}.corner.br{right:0;bottom:0;border-width:0 2px 2px 0}
+
+/* GENERIC NAV */
+.view-header{position:relative;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.view-title{font-family:var(--display);font-size:clamp(46px,7vw,100px);letter-spacing:-.025em;line-height:.78;transform:skewX(-8deg);text-transform:uppercase;text-shadow:9px 9px 0 rgba(0,16,90,.45)}
+.view-kicker{font-weight:900;letter-spacing:.25em;font-size:11px;transform:rotate(-4deg);color:var(--cyan);margin-bottom:14px}
+.back-btn{border:0;background:transparent;text-transform:uppercase;font-weight:900;letter-spacing:.16em;font-size:12px;cursor:pointer;padding:9px 12px;transform:skewX(-16deg);opacity:.8;transition:.25s var(--ease)}
+.back-btn span{display:inline-block;transform:skewX(16deg)}
+.back-btn:hover{opacity:1;transform:skewX(-16deg) translateX(-7px)}
+.panel{position:relative;background:rgba(4,17,71,.56);border-left:4px solid #fff;box-shadow:12px 12px 0 rgba(4,14,65,.2);backdrop-filter:blur(7px);clip-path:polygon(0 0,100% 0,96% 100%,0 94%)}
+
+/* MODES */
+.modes-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch}
+.mode-card{position:relative;min-height:41vh;border:0;padding:22px 18px;text-align:left;cursor:pointer;background:#fff;color:var(--ink);overflow:hidden;transform:skewX(-5deg) translateY(30px);opacity:0;transition:transform .5s var(--ease),filter .3s,box-shadow .3s}
+.screen.active .mode-card{animation:modeIn .65s var(--ease) forwards;animation-delay:calc(var(--i)*60ms + 90ms)}
+@keyframes modeIn{to{opacity:1;transform:skewX(-5deg) translateY(0)}}
+.mode-card:nth-child(2n){background:#e5f7ff}.mode-card:nth-child(3n){background:#edf0f8}
+.mode-card:hover{transform:skewX(-5deg) translateY(-8px);filter:brightness(1.03);box-shadow:0 18px 35px rgba(1,18,92,.28)}
+.mode-card>*{transform:skewX(5deg)}
+.mode-code{font-size:10px;font-weight:900;letter-spacing:.22em;opacity:.5}
+.mode-icon{font-size:clamp(54px,5vw,84px);font-family:var(--display);line-height:1;color:var(--blue);margin:30px 0 10px;transform:skewX(-8deg)!important}
+.mode-name{font-family:var(--display);font-size:clamp(28px,3.2vw,45px);line-height:.9;letter-spacing:-.015em}.mode-desc{font-size:12px;font-weight:900;line-height:1.55;margin-top:16px;color:#394255}.mode-tag{position:absolute;left:20px;bottom:15px;font-size:9px;font-weight:900;letter-spacing:.22em;opacity:.55}
+
+/* CLASS */
+.class-layout{display:grid;grid-template-columns:1fr .45fr;gap:18px;height:70vh}
+.class-list{padding:10px 0;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.4) transparent}
+.class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.student{position:relative;border:0;background:rgba(4,17,71,.64);color:#fff;text-align:left;padding:13px 15px;cursor:default;overflow:hidden;transform:translateX(-20px);opacity:0;transition:transform .3s var(--ease),background .25s,filter .25s}
+.screen.active .student{animation:studentIn .4s var(--ease) forwards;animation-delay:calc(var(--i)*28ms + 80ms)}
+@keyframes studentIn{to{opacity:1;transform:none}}
+.student:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform .25s var(--ease)}
+.student:hover{background:rgba(17,54,151,.92);filter:brightness(1.08)}.student:hover:before{transform:scaleY(1)}
+.student .idx{display:block;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.45);margin-bottom:5px}.student .name{font-weight:900;font-size:16px;letter-spacing:.03em}.student .mark{position:absolute;right:8px;bottom:-9px;font-family:var(--display);font-size:48px;opacity:.08}
+.class-meta{padding:25px;display:flex;flex-direction:column;justify-content:space-between}
+.class-meta .big{font-family:var(--display);font-size:clamp(76px,9vw,120px);line-height:.7;color:#fff;opacity:.95}.class-meta p{font-size:12px;line-height:1.7;font-weight:900;color:#dbfaff}.class-stat{margin-top:16px}.stat-line{display:flex;justify-content:space-between;font-size:10px;font-weight:900;letter-spacing:.16em;margin:8px 0}.stat-track{height:7px;background:rgba(255,255,255,.2);transform:skewX(-18deg)}.stat-track i{display:block;height:100%;background:var(--cyan);width:0;transition:width 1.2s var(--ease)}
+
+/* SETTINGS */
+.settings-panel{max-width:850px;padding:20px 28px}.setting-row{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16)}.setting-row:last-child{border-bottom:0}.setting-label{font-family:var(--display);font-size:28px}.setting-sub{font-size:11px;opacity:.55;font-weight:900;letter-spacing:.1em}.toggle{width:76px;height:28px;background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.42);cursor:pointer;position:relative;transform:skewX(-12deg)}.toggle:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;transition:transform .3s var(--ease),background .2s;box-shadow:0 0 9px rgba(255,255,255,.35)}.toggle.on{background:rgba(22,207,255,.26);border-color:var(--cyan)}.toggle.on:after{transform:translateX(47px);background:var(--cyan)}.range-wrap{display:flex;align-items:center;gap:12px}.range{accent-color:var(--cyan);width:180px}.danger{margin-top:26px;border:0;background:transparent;color:#fff;font-size:11px;font-weight:900;letter-spacing:.16em;cursor:pointer;opacity:.65}.danger:hover{opacity:1;color:var(--red)}
+
+/* PLAYER DRAW */
+#drawScreen{display:flex;align-items:center;justify-content:center;padding:0;background:rgba(3,11,62,.28)}
+.draw-card{position:relative;width:min(80vw,900px);padding:40px 5vw 46px;text-align:center;transform:rotate(-2deg);background:rgba(251,251,246,.96);color:var(--ink);clip-path:polygon(0 5%,94% 0,100% 88%,7% 100%);box-shadow:22px 22px 0 rgba(2,10,63,.28);overflow:hidden}
+.draw-card:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 42px,rgba(5,60,180,.04) 42px 49px);pointer-events:none}
+.draw-kicker{font-size:11px;font-weight:900;letter-spacing:.3em;color:var(--red);transform:skewX(-9deg)}
+.draw-label{font-family:var(--display);font-size:clamp(34px,5vw,72px);line-height:.9;transform:skewX(-9deg);margin-top:11px}
+.draw-name{font-family:var(--display);font-size:clamp(55px,9vw,120px);line-height:.8;color:#083fc0;transform:skewX(-9deg);min-height:1.05em;margin-top:22px;text-shadow:8px 8px 0 rgba(2,12,81,.08);filter:blur(0)}
+.draw-name.rolling{animation:nameFlicker .11s linear infinite alternate;filter:blur(1.4px)}
+@keyframes nameFlicker{to{transform:skewX(-9deg) translateX(-4px) scale(1.01)}}
+.draw-meta{display:flex;justify-content:center;gap:30px;margin-top:23px;font-size:10px;font-weight:900;letter-spacing:.16em;color:#536079}.draw-line{position:absolute;left:9%;right:9%;bottom:18px;height:4px;background:#d9e7ff;transform:skewX(-18deg)}.draw-line i{display:block;height:100%;width:0;background:#083fc0}
+
+/* QUIZ */
+#quiz{padding:6vh 6vw 5vh}.quiz-shell{height:84vh;display:grid;grid-template-rows:auto 1fr auto;gap:15px}.quiz-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:15px}.player-chip,.quiz-index{display:flex;align-items:baseline;gap:8px;font-weight:900;text-transform:uppercase}.player-chip{font-size:11px;letter-spacing:.18em}.player-chip b{font-family:var(--display);font-size:25px;letter-spacing:0}.quiz-index{justify-content:flex-end;font-size:11px;letter-spacing:.18em}.quiz-index strong{font-family:var(--display);font-size:26px}.score-chip{justify-self:center;text-align:center}.score-chip .label{display:block;font-size:9px;letter-spacing:.23em;opacity:.65}.score-chip .value{font-family:var(--display);font-size:28px}.progress{grid-column:1/-1;height:7px;background:rgba(255,255,255,.18);transform:skewX(-18deg);overflow:hidden}.progress i{display:block;width:0;height:100%;background:var(--cyan);box-shadow:0 0 16px rgba(22,207,255,.6);transition:width .45s var(--ease)}
+.question-area{position:relative;overflow:auto;padding:10px 2vw 4px 0}.question-tag{font-size:10px;letter-spacing:.24em;font-weight:900;color:var(--cyan);margin-bottom:14px}.question-text{font-family:var(--display);font-size:clamp(30px,4.6vw,69px);line-height:.95;letter-spacing:-.015em;max-width:1000px;text-transform:uppercase;transform:skewX(-5deg);text-wrap:balance}.passage{max-width:930px;margin:18px 0 20px;padding:19px 22px;background:rgba(255,255,255,.12);border-left:6px solid #fff;clip-path:polygon(0 0,100% 0,96% 100%,0 94%);font-size:15px;line-height:1.65;font-weight:700;color:#eafcff;user-select:text}.passage em{color:#fff}.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:28px;max-width:1080px}.answer{position:relative;border:0;background:rgba(250,251,246,.95);color:var(--ink);min-height:64px;padding:12px 18px;text-align:left;cursor:pointer;overflow:hidden;transform:skewX(-5deg);transition:transform .25s var(--ease),background .2s,filter .2s}
+.answer>*{transform:skewX(5deg)}.answer:before{content:"";position:absolute;inset:0 auto 0 0;width:0;background:var(--cyan);transition:width .35s var(--ease)}.answer:hover{transform:skewX(-5deg) translateX(8px);filter:brightness(1.03)}.answer:hover:before{width:7px}.answer .letter{display:inline-block;width:30px;font-weight:900;color:#3560b9}.answer .txt{font-family:var(--display);font-size:clamp(17px,2.2vw,28px);letter-spacing:.01em}.answer.lock{pointer-events:none}.answer.correct{background:#dfffe9;box-shadow:0 0 0 3px #fff inset}.answer.wrong{background:#ffe4ea;box-shadow:0 0 0 3px var(--red) inset}.answer.dim{opacity:.42}.answer.correct:before{width:7px;background:var(--lime)}.answer.wrong:before{width:7px;background:var(--red)}
+.quiz-bottom{display:flex;align-items:end;justify-content:space-between;gap:12px}.quiz-stats{display:flex;gap:18px;align-items:flex-end}.stat{min-width:88px}.stat label{display:block;font-size:8px;letter-spacing:.2em;opacity:.62;font-weight:900}.stat b{font-family:var(--display);font-size:26px}.streak-box{color:#fff}.streak-box.fire{animation:comboPulse .34s var(--ease) 2}.streak-box.fire b{color:var(--lime);text-shadow:0 0 14px rgba(157,255,0,.45)}
+@keyframes comboPulse{50%{transform:scale(1.22) rotate(-3deg)}}
+.timer-wrap{display:none;min-width:220px}.timer-wrap.show{display:block}.timer-meta{display:flex;justify-content:space-between;font-size:9px;font-weight:900;letter-spacing:.16em;margin-bottom:6px}.timer-track{height:11px;background:rgba(255,255,255,.18);transform:skewX(-20deg)}.timer-track i{display:block;height:100%;width:100%;background:var(--cyan);transition:width .05s linear}.timer-wrap.low .timer-track i{background:var(--red);box-shadow:0 0 18px rgba(241,44,69,.65)}.timer-wrap.low{animation:timerShake .5s ease-in-out infinite}.timer-flag{font-family:var(--display);font-size:26px;line-height:1}.study-note{display:none;position:absolute;right:1vw;top:10px;width:min(34vw,350px);background:rgba(252,252,247,.98);color:var(--ink);padding:18px;clip-path:polygon(0 0,100% 4%,94% 100%,4% 96%);box-shadow:14px 14px 0 rgba(0,15,79,.18);z-index:6}.study-note.show{display:block;animation:noteIn .55s var(--ease)}.study-note h3{margin:0;font-family:var(--display);font-size:30px}.study-note p{font-weight:700;line-height:1.55;font-size:12px}.study-note .rule{color:var(--blue);font-weight:900;letter-spacing:.06em}
+@keyframes noteIn{0%{opacity:0;transform:translate(50px,-20px) rotate(4deg)}100%{opacity:1;transform:none}}
+
+/* FEEDBACK / RESULT */
+#feedback{z-index:10;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:1;transform:none}
+.feedback-word{font-family:var(--display);font-size:clamp(85px,18vw,250px);line-height:.65;transform:skewX(-10deg) rotate(-4deg) scale(.4);opacity:0;color:#fff;text-shadow:16px 16px 0 rgba(5,28,123,.55);letter-spacing:-.04em}.feedback-word.show{animation:feedbackIn .72s var(--ease) forwards}.feedback-word.correct{color:var(--lime)}.feedback-word.wrong{color:var(--red)}
+@keyframes feedbackIn{0%{opacity:0;transform:skewX(-10deg) rotate(-8deg) scale(.5) translateX(-40px)}36%{opacity:1;transform:skewX(-10deg) rotate(0deg) scale(1.05) translateX(10px)}68%{transform:skewX(-10deg) rotate(-2deg) scale(.98)}100%{opacity:0;transform:skewX(-10deg) rotate(-4deg) scale(1.16) translateX(75px)}}
+#result{padding:6vh 6vw}.result-layout{height:82vh;display:grid;grid-template-columns:1fr .9fr;gap:18px;align-items:stretch}.result-main{position:relative;padding:30px;background:rgba(252,252,247,.97);color:var(--ink);clip-path:polygon(0 0,96% 0,100% 92%,7% 100%);transform:rotate(-2deg);overflow:hidden}.result-main:after{content:"RESULT";position:absolute;right:-50px;bottom:-40px;font-family:var(--display);font-size:150px;color:rgba(8,63,192,.07);transform:rotate(-4deg)}.result-kicker{font-size:11px;letter-spacing:.28em;font-weight:900;color:var(--red)}.result-title{font-family:var(--display);font-size:clamp(48px,8vw,110px);line-height:.75;margin-top:20px;transform:skewX(-7deg)}.result-score{font-family:var(--display);font-size:clamp(86px,13vw,190px);line-height:.76;margin-top:35px;color:#093fc1;text-shadow:10px 10px 0 rgba(3,18,90,.12);transform:skewX(-9deg)}.result-caption{font-weight:900;font-size:11px;letter-spacing:.2em;opacity:.6;margin-top:11px}.result-side{display:grid;grid-template-columns:1fr 1fr;gap:8px}.result-stat{position:relative;background:rgba(6,22,86,.72);padding:24px;clip-path:polygon(0 0,100% 8%,96% 100%,0 93%);transform:translateY(30px);opacity:0}.result-stat:nth-child(1){animation:statIn .55s var(--ease) .05s forwards}.result-stat:nth-child(2){animation:statIn .55s var(--ease) .12s forwards}.result-stat:nth-child(3){animation:statIn .55s var(--ease) .19s forwards}.result-stat:nth-child(4){animation:statIn .55s var(--ease) .26s forwards}.result-stat span{display:block;font-size:10px;letter-spacing:.24em;font-weight:900;opacity:.55}.result-stat b{display:block;font-family:var(--display);font-size:clamp(44px,5vw,70px);margin-top:18px}.result-actions{grid-column:1/-1;display:flex;align-items:end;gap:8px}.result-button{border:0;background:#fff;color:var(--ink);padding:14px 20px;cursor:pointer;transform:skewX(-10deg);font-family:var(--display);font-size:23px;transition:transform .25s var(--ease),filter .2s}.result-button span{display:block;transform:skewX(10deg)}.result-button:hover{transform:skewX(-10deg) translateY(-6px);filter:brightness(1.04)}
+@keyframes statIn{to{opacity:1;transform:none}}
+
+/* MODALS */
+.modal{position:absolute;inset:0;z-index:30;display:grid;place-items:center;background:rgba(0,8,45,.58);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .3s}.modal.show{opacity:1;pointer-events:auto}.modal-card{width:min(92vw,720px);padding:28px;background:#fff;color:var(--ink);clip-path:polygon(0 0,98% 4%,100% 92%,4% 100%);box-shadow:20px 20px 0 rgba(0,12,66,.25);transform:translateY(30px) rotate(-1.8deg);transition:transform .55s var(--ease)}.modal.show .modal-card{transform:none}.modal-title{font-family:var(--display);font-size:48px;line-height:.8}.modal-text{font-weight:700;line-height:1.6;font-size:13px;color:#3f4653;margin-top:15px}.modal-close{margin-top:18px;border:0;background:var(--ink);color:#fff;padding:10px 16px;cursor:pointer;font-weight:900;letter-spacing:.12em;transform:skewX(-10deg)}
+
+/* TRANSITION COVER */
+#transition{position:absolute;inset:0;z-index:50;pointer-events:none;overflow:hidden}
+#transition .bar{position:absolute;left:-10%;right:-10%;height:18vh;background:#fff;transform:translateX(-120%) skewX(-18deg)}
+#transition .bar.b2{background:var(--cyan);height:6vh}.transitioning #transition .bar{animation:cover .55s var(--ease2) forwards}.transitioning #transition .bar.b2{animation-delay:45ms}.transition-out #transition .bar{animation:uncover .5s var(--ease) forwards;transform:translateX(120%) skewX(-18deg)}
+@keyframes cover{0%{transform:translateX(-120%) skewX(-18deg)}100%{transform:translateX(120%) skewX(-18deg)}}@keyframes uncover{0%{transform:translateX(120%) skewX(-18deg)}100%{transform:translateX(-120%) skewX(-18deg)}}
+
+/* TOAST / PARTICLES */
+.toast{position:absolute;left:50%;top:86px;z-index:40;transform:translateX(-50%) translateY(-18px) skewX(-10deg);background:rgba(252,252,247,.94);color:var(--ink);padding:8px 17px;font-weight:900;font-size:10px;letter-spacing:.18em;opacity:0;pointer-events:none;transition:.38s var(--ease)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0) skewX(-10deg)}
+.score-float{position:fixed;z-index:45;font-family:var(--display);font-size:26px;color:#fff;text-shadow:4px 4px 0 rgba(1,17,92,.55);pointer-events:none;animation:floatUp .8s var(--ease) forwards}@keyframes floatUp{to{opacity:0;transform:translateY(-72px) scale(1.18)}}
+#particleLayer{position:absolute;inset:0;z-index:41;pointer-events:none;overflow:hidden}.particle{position:absolute;width:7px;height:7px;background:#fff;transform:skewX(-18deg);animation:particleFly .65s var(--ease) forwards;box-shadow:0 0 10px rgba(255,255,255,.65)}@keyframes particleFly{to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(120deg) scale(.15)}}
+
+/* CUSTOM CURSOR */
+.cursor{position:fixed;z-index:100;left:0;top:0;width:18px;height:18px;border:2px solid rgba(255,255,255,.75);transform:translate(-50%,-50%) rotate(45deg);pointer-events:none;mix-blend-mode:screen;transition:width .18s var(--ease),height .18s var(--ease),border-color .18s}.cursor.active{width:27px;height:27px;border-color:var(--cyan)}body.touch .cursor{display:none}
+
+/* LEGIBILITY — targeted contrast improvements, preserving the existing visual system */
+.top-left,.top-right,.view-kicker,.back-btn,.player-chip,.quiz-index,.score-chip,.question-tag,.quiz-stats,.timer-meta,.timer-flag,.home-readout{
+  text-shadow:0 2px 4px rgba(0,8,44,.65),0 0 10px rgba(0,20,95,.28);
+}
+.question-text{
+  text-shadow:5px 5px 0 rgba(0,15,80,.48),0 0 18px rgba(0,8,55,.32);
+  -webkit-text-stroke:.35px rgba(2,16,84,.28);
+}
+.question-tag{
+  text-shadow:0 2px 7px rgba(0,10,60,.7),0 0 9px rgba(0,30,140,.35);
+}
+.passage{
+  background:rgba(4,20,82,.30);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 7px 18px rgba(0,10,58,.18);
+  text-shadow:0 1px 3px rgba(0,12,65,.58);
+}
+.player-chip b,.score-chip .value,.quiz-index strong,.quiz-stats b,.timer-flag,.timer-meta span:last-child{
+  text-shadow:4px 4px 0 rgba(0,14,76,.48),0 0 12px rgba(0,11,60,.3);
+}
+.student .name,.student .idx,.class-meta p,.stat-line{
+  text-shadow:0 2px 4px rgba(0,7,42,.72);
+}
+.setting-label,.setting-sub,.danger{
+  text-shadow:0 2px 4px rgba(0,7,42,.72);
+}
+.draw-kicker,.draw-label{
+  text-shadow:0 2px 3px rgba(255,255,255,.55);
+}
+.draw-meta{
+  text-shadow:0 2px 3px rgba(0,20,85,.18);
+}
+.mode-name,.mode-code,.mode-desc,.mode-tag{
+  text-shadow:0 1px 1px rgba(255,255,255,.45);
+}
+.answer .txt,.answer .letter{
+  text-shadow:0 1px 0 rgba(255,255,255,.72);
+}
+.result-stat span,.result-stat b{
+  text-shadow:0 2px 4px rgba(0,8,46,.55);
+}
+
+/* Numbers / scoring use a dedicated readable display face. */
+.score-chip .value,.quiz-index strong,.quiz-stats b,.timer-number,.result-score,.result-stat b,.class-meta .big{
+  font-family:var(--mono);
+  font-weight:700;
+}
+
+/* RESPONSIVE */
+@media (max-width:980px){
+  .modes-grid{grid-template-columns:repeat(2,1fr);height:68vh;overflow:auto;padding-right:3px}.mode-card{min-height:29vh}.mode-card:last-child{grid-column:1/-1}.class-layout{grid-template-columns:1fr;height:69vh}.class-meta{display:none}.class-grid{grid-template-columns:repeat(2,1fr)}.home-readout{display:none}.result-layout{grid-template-columns:1fr;overflow:auto}.result-main{min-height:44vh}.result-side{min-height:28vh}.result-actions{padding-bottom:20px}
+}
+@media (max-width:700px){
+  .screen{padding:8vh 5vw 4vh}.brand-stack{left:7vw;top:12vh;max-width:88vw}.brand-title{font-size:clamp(56px,18vw,100px)}.brand-sub{font-size:12px;line-height:1.5}.menu-wrap{left:6vw;bottom:9vh;gap:3px}.menu-item{min-width:86vw;padding:9px 8px}.menu-item .label{font-size:34px}.menu-item .mini{display:none}.view-header{margin-bottom:20px}.view-title{font-size:62px}.top-right{display:none}.topline{left:5vw;right:5vw}
+  .modes-grid{grid-template-columns:1fr;height:70vh}.mode-card{min-height:24vh}.mode-card:last-child{grid-column:auto}.class-grid{grid-template-columns:1fr}.class-list{padding-right:3px}.class-layout{height:71vh}.settings-panel{padding:18px}.setting-label{font-size:22px}.range{width:120px}.timer-wrap{min-width:150px}.quiz-top{grid-template-columns:1fr auto}.score-chip{display:none}.quiz-index{font-size:9px}.quiz-index strong{font-size:20px}.question-text{font-size:clamp(27px,8vw,52px)}.answer-grid{grid-template-columns:1fr;margin-top:18px}.answer{min-height:58px}.study-note{position:relative;top:auto;right:auto;width:100%;margin-top:15px}.quiz-bottom{align-items:flex-end}.quiz-stats{gap:9px}.stat{min-width:64px}.stat b{font-size:22px}.stat label{font-size:7px}.draw-card{width:92vw;padding:35px 5vw 40px}.draw-name{font-size:clamp(52px,14vw,88px)}
+  .result-side{grid-template-columns:1fr 1fr}.result-stat{padding:18px}.result-stat b{font-size:44px}.result-actions{flex-wrap:wrap}.result-button{font-size:18px}.noise{opacity:.05}
+}
+@media (pointer:coarse){body.touch .menu-item:hover,.touch .mode-card:hover,.touch .answer:hover{transform:none}.touch .menu-item:after{transition:none}}
+</style>
+</head>
+<body>
+<div id="app" class="">
+  <!-- External background music. Replace only the placeholder with a direct .mp3/.wav/.ogg URL. -->
+  <audio id="bgMusic" preload="none" loop playsinline src="COLE_A_URL_DIRETA_DA_MUSICA_AQUI"></audio>
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-wash"></div>
+  <div class="geo a"></div><div class="geo b"></div><div class="geo c"></div><div class="geo d"></div>
+  <div class="scanlines"></div><div class="noise"></div>
+  <div class="app-chrome">
+    <div class="topline"></div>
+    <div class="top-left"><i class="dot"></i><span>ENGLISH / 09</span></div>
+    <div class="top-right" id="topClock">SYSTEM READY</div>
+    <div class="corners"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+  </div>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="brand-stack">
+        <div class="brand-kicker">9TH GRADE // ENGLISH QUIZ</div>
+        <div class="brand-title">WORD<span class="slash">/</span>SHIFT</div>
+        <div class="brand-sub">READ &nbsp;•&nbsp; CHOOSE &nbsp;•&nbsp; <span>BREAK THE STREAK</span></div>
+      </div>
+      <div class="menu-wrap" id="mainMenu">
+        <button class="menu-item" data-screen="modes"><span class="num">01</span><span class="label">START</span><span class="mini">ENTER</span></button>
+        <button class="menu-item" data-screen="modes"><span class="num">02</span><span class="label">MODES</span><span class="mini">SELECT</span></button>
+        <button class="menu-item" data-screen="class"><span class="num">03</span><span class="label">CLASS</span><span class="mini">21 PLAYERS</span></button>
+        <button class="menu-item" data-screen="settings"><span class="num">04</span><span class="label">SETTINGS</span><span class="mini">OPTIONS</span></button>
+      </div>
+      <div class="home-readout">
+        <div class="bar"><b></b></div>
+        <div>READING // INDEFINITE PRONOUNS // GENERAL THINGS</div>
+        <div style="opacity:.55;margin-top:4px">47–49 / 71–72 // NOTEBOOK REVIEW</div>
+      </div>
+    </section>
+
+    <section id="modes" class="screen">
+      <div class="view-header"><div><div class="view-kicker">SELECT MODULE</div><h1 class="view-title">MODES</h1></div><button class="back-btn" data-back="home"><span>← BACK</span></button></div>
+      <div class="modes-grid">
+        <button class="mode-card" style="--i:0" data-mode="normal"><div class="mode-code">01 // STANDARD</div><div class="mode-icon">01</div><div class="mode-name">NORMAL</div><div class="mode-desc">20 questions. Classic quiz flow with immediate feedback and scoring.</div><div class="mode-tag">READY</div></button>
+        <button class="mode-card" style="--i:1" data-mode="time"><div class="mode-code">02 // CLOCK</div><div class="mode-icon">TT</div><div class="mode-name">TIME ATTACK</div><div class="mode-desc">Beat the clock. Fast answers build extra points. 12 seconds per question.</div><div class="mode-tag">RUSH</div></button>
+        <button class="mode-card" style="--i:2" data-mode="streak"><div class="mode-code">03 // COMBO</div><div class="mode-icon">05×</div><div class="mode-name">STREAK</div><div class="mode-desc">Keep the chain alive. Every correct answer raises the combo bonus.</div><div class="mode-tag">NO MERCY</div></button>
+        <button class="mode-card" style="--i:3" data-mode="endless"><div class="mode-code">04 //∞ LOOP</div><div class="mode-icon">∞</div><div class="mode-name">ENDLESS</div><div class="mode-desc">Questions do not stop. One mistake ends the run.</div><div class="mode-tag">SURVIVE</div></button>
+        <button class="mode-card" style="--i:4" data-mode="study"><div class="mode-code">05 // REVIEW</div><div class="mode-icon">ST</div><div class="mode-name">STUDY</div><div class="mode-desc">No pressure. Get the rule, the reason, and a mini explanation after every answer.</div><div class="mode-tag">LEARN</div></button>
+      </div>
+    </section>
+
+    <section id="class" class="screen">
+      <div class="view-header"><div><div class="view-kicker">PARTICIPANTS // CURRENT POOL</div><h1 class="view-title">CLASS</h1></div><button class="back-btn" data-back="home"><span>← BACK</span></button></div>
+      <div class="class-layout">
+        <div class="panel class-list"><div class="class-grid" id="classGrid"></div></div>
+        <aside class="panel class-meta"><div><div class="big">21</div><p>PLAYER SIGNALS ONLINE.<br>THE DRAW SYSTEM rotates through the full class before repeating whenever possible.</p></div><div class="class-stat"><div class="stat-line"><span>CURRENT CYCLE</span><b id="cycleStat">00 / 21</b></div><div class="stat-track"><i id="cycleBar"></i></div><div class="stat-line"><span>GAMES PLAYED</span><b id="gamesStat">00</b></div><div class="stat-line"><span>QUESTIONS ANSWERED</span><b id="answeredStat">00</b></div></div></aside>
+      </div>
+    </section>
+
+    <section id="settings" class="screen">
+      <div class="view-header"><div><div class="view-kicker">SYSTEM PARAMETERS</div><h1 class="view-title">SETTINGS</h1></div><button class="back-btn" data-back="home"><span>← BACK</span></button></div>
+      <div class="panel settings-panel">
+        <div class="setting-row"><div><div class="setting-label">SOUND</div><div class="setting-sub">UI EFFECTS / FEEDBACK</div></div><button id="soundToggle" class="toggle on" aria-label="Toggle sound"></button></div>
+        <div class="setting-row"><div><div class="setting-label">MUSIC</div><div class="setting-sub">AMBIENT SYNTH LOOP / LOW VOLUME</div></div><button id="musicToggle" class="toggle on" aria-label="Toggle music"></button></div>
+        <div class="setting-row"><div><div class="setting-label">MOTION</div><div class="setting-sub">BACKGROUND + PARTICLE INTENSITY</div></div><button id="motionToggle" class="toggle on" aria-label="Toggle motion"></button></div>
+        <div class="setting-row"><div><div class="setting-label">MUSIC LEVEL</div><div class="setting-sub">CURRENT <span id="musicLevelLabel">30%</span></div></div><div class="range-wrap"><input id="musicLevel" class="range" type="range" min="0" max="40" value="30"><span style="font-size:10px;font-weight:900;letter-spacing:.12em">VOL</span></div></div>
+        <button id="resetStats" class="danger">[ RESET LOCAL RECORDS ]</button>
+      </div>
+    </section>
+
+    <section id="drawScreen" class="screen">
+      <div class="draw-card">
+        <div class="draw-kicker">NEXT PLAYER</div>
+        <div class="draw-label">SORTEANDO...</div>
+        <div class="draw-name" id="drawName">—</div>
+        <div class="draw-meta"><span id="drawCount">PLAYERS 00 / 21</span><span>RANDOM POOL // NO REPEAT</span></div>
+        <div class="draw-line"><i id="drawProgress"></i></div>
+      </div>
+    </section>
+
+    <section id="quiz" class="screen">
+      <div class="quiz-shell">
+        <div class="quiz-top">
+          <div class="player-chip"><span>PLAYER</span><b id="quizPlayer">GABI</b></div>
+          <div class="score-chip"><span class="label">SCORE</span><span class="value" id="quizScore">0000</span></div>
+          <div class="quiz-index"><span>QUESTION</span><strong id="qIndex">01</strong><span id="qTotal">/ 20</span></div>
+          <div class="progress"><i id="progressBar"></i></div>
+        </div>
+        <div class="question-area">
+          <div class="question-tag" id="questionTag">INDEFINITE PRONOUNS // PLACES</div>
+          <div class="passage" id="passage" hidden></div>
+          <div class="question-text" id="questionText">Loading question...</div>
+          <div class="answer-grid" id="answerGrid"></div>
+          <div class="study-note" id="studyNote"><h3>WHY?</h3><p id="studyExplain"></p><p class="rule" id="studyRule"></p></div>
+        </div>
+        <div class="quiz-bottom">
+          <div class="quiz-stats">
+            <div class="stat streak-box" id="streakBox"><label>STREAK</label><b id="quizStreak">00</b></div>
+            <div class="stat"><label>ACCURACY</label><b id="quizAccuracy">100%</b></div>
+            <div class="stat"><label>QUESTIONS</label><b id="quizQuestions">00</b></div>
+          </div>
+          <div class="timer-wrap" id="timerWrap"><div class="timer-meta"><span id="timerFlag">TIME LEFT</span><span id="timerNumber">12.0</span></div><div class="timer-track"><i id="timerBar"></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" class="screen">
+      <div class="result-layout">
+        <div class="result-main"><div class="result-kicker">SESSION LOG // FINAL</div><div class="result-title">QUIZ<br>COMPLETE</div><div class="result-score" id="resultScore">0000</div><div class="result-caption">TOTAL SCORE</div></div>
+        <div class="result-side">
+          <div class="result-stat"><span>ACCURACY</span><b id="resultAccuracy">00%</b></div>
+          <div class="result-stat"><span>STREAK</span><b id="resultStreak">00</b></div>
+          <div class="result-stat"><span>CORRECT</span><b id="resultCorrect">00</b></div>
+          <div class="result-stat"><span>WRONG</span><b id="resultWrong">00</b></div>
+          <div class="result-actions"><button id="retryBtn" class="result-button"><span>RETRY</span></button><button id="modeBtn" class="result-button"><span>MODES</span></button><button id="homeBtn" class="result-button"><span>HOME</span></button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="feedback" class="screen"><div id="feedbackWord" class="feedback-word"></div></div>
+  <div id="particleLayer"></div>
+  <div id="toast" class="toast">READY</div>
+  <div id="modal" class="modal"><div class="modal-card"><div class="modal-title" id="modalTitle">INFO</div><div class="modal-text" id="modalText"></div><button class="modal-close" id="modalClose">CLOSE</button></div></div>
+  <div id="transition"><div class="bar"></div><div class="bar b2"></div></div>
+  <div id="cursor" class="cursor"></div>
+</div>
+<script>
+/* ============================================================
+   WORD/SHIFT — SINGLE FILE QUIZ ENGINE
+   App / Menu / Quiz / Questions / Score / Sound / Particles /
+   Transitions / UI / Storage / Player Draw
+============================================================ */
+(() => {
+  'use strict';
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+  const clamp = (n,min,max) => Math.max(min, Math.min(max,n));
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const pad = n => String(Math.max(0, Math.round(n))).padStart(2,'0');
+  const fmtScore = n => String(Math.max(0,Math.round(n))).padStart(4,'0');
+
+  const players = [
+    "Aabe", "Moisés", "Victor", "Eliabe", "Camila", "Gabi", "Maria Clara", "Maria Júlia", "Mariana", "Emilly", "as Gêmeas", "Anne", "Caio", "Ana Júlia", "Lívia", "Geovana.C", "J.Gabriel", "Geovanna.M", "Conrado", "Lavinia", "Saymon"
+  ];
+
+  /* Question bank — 48 questions, mixed reading + indefinite pronouns. */
+  const Q = [
+    {q:"There is ___ in the classroom. I can see a student in one of the back seats.",o:["somewhere","everywhere","nowhere","anywhere"],a:0,e:"Somewhere refers to an unspecified place. We know the person is in a place, but we do not know which one.",r:"PLACES: SOMEWHERE = an unspecified place (usually in affirmative sentences).",t:"PLACES"},
+    {q:"Did you go ___ after school?",o:["somewhere","nowhere","everywhere","anything"],a:0,e:"In questions about an unspecified place, somewhere is possible when the speaker expects a positive answer.",r:"PLACES: SOMEWHERE can appear in questions when a positive answer is expected.",t:"PLACES"},
+    {q:"I looked ___ for my notebook, but I could not find it.",o:["everywhere","somewhere","nowhere","anything"],a:0,e:"Everywhere means all places. The sentence says the speaker searched in all possible places.",r:"PLACES: EVERYWHERE = all places.",t:"PLACES"},
+    {q:"We searched the park, the library, and the hall. We found the missing key ___.",o:["nowhere","anywhere","everywhere","somewhere"],a:0,e:"Nowhere means not in any place. The key was not found in the places searched.",r:"PLACES: NOWHERE = no place.",t:"PLACES"},
+    {q:"You can sit ___ you like. All the seats are free.",o:["anywhere","nowhere","everywhere","someone"],a:0,e:"Anywhere means any place. When all places are possible, anywhere fits.",r:"PLACES: ANYWHERE = any place / an unspecified place, especially in questions and negative sentences.",t:"PLACES"},
+    {q:"The students put posters ___: on the walls, doors, and windows.",o:["everywhere","nowhere","somewhere","anywhere"],a:0,e:"Everywhere describes posters placed in many or all parts of the area.",r:"PLACES: EVERYWHERE = in all places.",t:"PLACES"},
+    {q:"The town is quiet. There is ___ to buy a snack after 10 p.m.",o:["nowhere","somewhere","anywhere","everywhere"],a:0,e:"Nowhere means there is no place that meets the condition.",r:"PLACES: NOWHERE expresses no place.",t:"PLACES"},
+    {q:"Is there ___ nearby where we can study?",o:["somewhere","nowhere","everywhere","no one"],a:0,e:"Somewhere can be used in a question when asking about an unspecified possible location.",r:"PLACES: SOMEWHERE refers to an unspecified location.",t:"PLACES"},
+    {q:"If you lose your phone, check ___ — your desk, your bag, and the sofa.",o:["everywhere","nowhere","somewhere","anyone"],a:0,e:"The advice covers all of the possible places mentioned, so everywhere fits.",r:"PLACES: EVERYWHERE = all places.",t:"PLACES"},
+    {q:"I do not want to go ___. I am too tired to leave home.",o:["anywhere","somewhere","everywhere","nowhere"],a:0,e:"In a negative sentence, anywhere means any place at all: I do not want to go to any place.",r:"PLACES: ANYWHERE is common in negative sentences.",t:"PLACES"},
+    {q:"Choose the best word: “There is ___ on my desk, but I don't remember what it is.”",o:["something","anything","nothing","everything"],a:0,e:"Something means an unspecified thing. The speaker knows an object exists but does not identify it.",r:"THINGS: SOMETHING = an unspecified thing, commonly in affirmative sentences.",t:"THINGS"},
+    {q:"I didn't eat ___ before the test.",o:["anything","something","everything","nothing"],a:0,e:"Anything is commonly used after a negative verb: I didn't eat anything.",r:"THINGS: ANYTHING often appears in negatives and questions.",t:"THINGS"},
+    {q:"There is ___ in the box. It is completely empty.",o:["nothing","something","anything","everything"],a:0,e:"Nothing means not a single thing.",r:"THINGS: NOTHING = no thing / not a single thing.",t:"THINGS"},
+    {q:"She knows ___ about the topic; she studied every chapter.",o:["everything","nothing","anything","something"],a:0,e:"Everything means all things. She studied every chapter, so she knows everything about the topic.",r:"THINGS: EVERYTHING = all things.",t:"THINGS"},
+    {q:"Would you like ___ to drink?",o:["something","anything","nothing","everything"],a:0,e:"Something is natural in offers because the speaker is suggesting that there is a possible choice.",r:"THINGS: SOMETHING is common in offers.",t:"THINGS"},
+    {q:"Is there ___ you need from the library?",o:["anything","something","nothing","everything"],a:0,e:"Anything is commonly used in questions about an unspecified thing.",r:"THINGS: ANYTHING is common in questions.",t:"THINGS"},
+    {q:"I know ___ about the answer yet. We need more information.",o:["nothing","something","anything","everything"],a:0,e:"Nothing means no information or no thing is known.",r:"THINGS: NOTHING expresses absence.",t:"THINGS"},
+    {q:"He checked ___ before leaving: his keys, wallet, phone, and backpack.",o:["everything","nothing","anything","something"],a:0,e:"Everything means all things. The sentence lists the complete set he checked.",r:"THINGS: EVERYTHING = all things.",t:"THINGS"},
+    {q:"There isn't ___ wrong with the computer. It works perfectly.",o:["anything","something","everything","nothing"],a:0,e:"Anything is used after the negative “isn't”: there isn't anything wrong.",r:"THINGS: ANYTHING often appears with not / n't.",t:"THINGS"},
+    {q:"Nobody called, so ___ left a message.",o:["no one","someone","everyone","anyone"],a:0,e:"No one means not one person. Nobody called, so no one left a message.",r:"PEOPLE: NO ONE = not one person.",t:"PEOPLE"},
+    {q:"___ in our group has a different idea, but everyone is listening.",o:["Everyone","No one","Anyone","Someone"],a:0,e:"Everyone refers to all the people in the group.",r:"PEOPLE: EVERYONE = all people in a group.",t:"PEOPLE"},
+    {q:"I think ___ is knocking at the door.",o:["someone","anyone","no one","everyone"],a:0,e:"Someone means an unspecified person and is natural in an affirmative statement.",r:"PEOPLE: SOMEONE = an unspecified person.",t:"PEOPLE"},
+    {q:"Did ___ answer question five?",o:["anyone","someone","no one","everyone"],a:0,e:"Anyone commonly appears in questions when asking whether any person did something.",r:"PEOPLE: ANYONE = any person; common in questions and negatives.",t:"PEOPLE"},
+    {q:"___ can join the club if they follow the rules.",o:["Anyone","No one","Someone","Everyone"],a:0,e:"Anyone means any person. The rule allows any person who follows the conditions.",r:"PEOPLE: ANYONE = any person / whoever.",t:"PEOPLE"},
+    {q:"___ in the room was talking at the same time, so it was very noisy.",o:["Everyone","No one","Someone","Anyone"],a:0,e:"Everyone means all the people present.",r:"PEOPLE: EVERYONE = all people.",t:"PEOPLE"},
+    {q:"There is ___ at the door. Can you check who it is?",o:["someone","no one","anyone","everyone"],a:0,e:"Someone indicates that an unspecified person is there.",r:"PEOPLE: SOMEONE = an unspecified person.",t:"PEOPLE"},
+    {q:"We asked three times, but ___ knew the answer.",o:["no one","someone","everyone","anyone"],a:0,e:"No one means not a single person knew the answer.",r:"PEOPLE: NO ONE = zero people.",t:"PEOPLE"},
+    {q:"Text: “Mia forgot her umbrella. She walked to the bus stop and waited under a shop roof. Then a friend arrived and shared an umbrella with her.”\nWhere did Mia wait?",o:["Under a shop roof","At home","Inside a bus","At school"],a:0,e:"The text states that Mia waited under a shop roof.",r:"READING: Look for the exact action and place stated in the text.",t:"READING"},
+    {q:"Text: “Leo looked everywhere for his blue notebook. He checked his room, his backpack, and the classroom. Finally, he found it under the library desk.”\nWhat does “everywhere” mean here?",o:["In many/all possible places","Only in the library","At someone's house","Nowhere"],a:0,e:"Leo checked many places. Everywhere means all or many possible places in the context.",r:"READING: EVERYWHERE = in all places.",t:"READING"},
+    {q:"Text: “Sara opened the fridge. There was nothing to eat, so she made toast.”\nWhy did Sara make toast?",o:["There was nothing to eat in the fridge","She wanted something sweet","Someone called her","Everything was ready"],a:0,e:"The text directly says there was nothing to eat in the fridge.",r:"READING: NOTHING = no thing.",t:"READING"},
+    {q:"Text: “Tom asked, ‘Is there anywhere quiet around here?’ His sister pointed to the garden.”\nWhy is “anywhere” used?",o:["He is asking about any possible place","He means every place","He means no place","He is naming one exact place"],a:0,e:"Anywhere is commonly used in questions when asking whether there is any possible place.",r:"READING: ANYWHERE is common in questions.",t:"READING"},
+    {q:"Text: “We planned a class picnic. Everyone brought something to share. Ana brought fruit, and Caio brought sandwiches.”\nWhat did everyone do?",o:["Brought something to share","Stayed at home","Forgot the food","Went to the library"],a:0,e:"The sentence says everyone brought something to share.",r:"READING: EVERYONE = all people in the group.",t:"READING"},
+    {q:"Text: “After the game, no one wanted to leave. They talked and laughed until the teacher arrived.”\nWhat does “no one” refer to?",o:["Not one person wanted to leave","Every teacher left","One specific student","Anyone outside the room"],a:0,e:"No one means zero people. The text says none of the group wanted to leave.",r:"READING: NO ONE = not one person.",t:"READING"},
+    {q:"Text: “Nina searched somewhere in the kitchen for the missing spoon. She eventually found it in a drawer.”\nWhat was she looking for?",o:["A missing spoon","A notebook","A phone","A key"],a:0,e:"The text directly says she was looking for the missing spoon.",r:"READING: Identify the object named in the passage.",t:"READING"},
+    {q:"Which sentence is correct?",o:["There is someone at the gate.","There is no one at the gate, because someone are there.","Anyone is at the gate in the sentence about one person.","Everyone are at the gate."],a:0,e:"Someone correctly refers to an unspecified person in an affirmative sentence.",r:"GRAMMAR: Use SOMEONE for one unspecified person.",t:"GRAMMAR"},
+    {q:"Which sentence is correct?",o:["I can't find my bag anywhere.","I can't find my bag somewhere.","I can't find my bag everywhere.","I can't find my bag no one."],a:0,e:"Anywhere is natural after the negative can't find.",r:"GRAMMAR: ANYWHERE is common with negative sentences.",t:"GRAMMAR"},
+    {q:"Choose the best completion: “We have food for ___, so nobody needs to worry.”",o:["everyone","no one","nothing","anywhere"],a:0,e:"Everyone refers to all the people who need food.",r:"PEOPLE: EVERYONE = all people.",t:"GRAMMAR"},
+    {q:"Choose the best completion: “There is ___ on the floor. I think it is a coin.”",o:["something","nothing","anything","everything"],a:0,e:"The speaker sees an unspecified object: something.",r:"THINGS: SOMETHING = an unspecified object/thing.",t:"THINGS"},
+    {q:"Choose the best completion: “I don't know ___ about this game yet.”",o:["anything","something","everything","everyone"],a:0,e:"Anything commonly follows negative expressions such as “don't know.”",r:"THINGS: ANYTHING commonly appears after negatives.",t:"THINGS"},
+    {q:"Choose the best completion: “___ can improve with practice.”",o:["Everyone","Nothing","Somewhere","Anything"],a:0,e:"Everyone refers to all people and fits the general statement about people improving.",r:"PEOPLE: EVERYONE = all people.",t:"PEOPLE"},
+    {q:"Choose the best completion: “I looked ___, but my glasses were still on my head.”",o:["everywhere","nowhere","someone","something"],a:0,e:"The speaker searched in all possible places, so everywhere fits.",r:"PLACES: EVERYWHERE = all places.",t:"PLACES"},
+    {q:"Choose the best completion: “There is ___ to hide; the room is completely open.”",o:["nowhere","somewhere","anywhere","someone"],a:0,e:"Nowhere means there is no place available.",r:"PLACES: NOWHERE = no place.",t:"PLACES"},
+    {q:"Text: “Owen wanted to revise. He found a quiet corner at school where no one was talking. He studied for thirty minutes.”\nWhy was the corner useful?",o:["It was quiet and no one was talking","It was full of games","Everyone was shouting there","He found food there"],a:0,e:"The text says the corner was quiet and no one was talking.",r:"READING: Use the details explicitly given by the writer.",t:"READING"},
+    {q:"Text: “Everyone in the team had a task. Someone prepared the slides, someone checked the text, and someone tested the sound.”\nHow many kinds of tasks are named?",o:["Three","One","Two","None"],a:0,e:"The text names slides, text, and sound — three kinds of tasks.",r:"READING: Count the distinct actions named in the passage.",t:"READING"},
+    {q:"Text: “I searched everywhere for my keys, but they were nowhere in the house. Later, I found them in the car.”\nWhich statement is true?",o:["The keys were not in the house.","The keys were in every room.","Nobody found the keys.","The keys were on the table."],a:0,e:"The text says the keys were nowhere in the house and were later found in the car.",r:"READING: Compare the statement with the exact information in the text.",t:"READING"},
+    {q:"Choose the best completion: “Would you like ___ else?”",o:["anything","nothing","no one","everywhere"],a:0,e:"Anything is common in questions and means any additional thing.",r:"THINGS: ANYTHING is common in questions.",t:"THINGS"},
+    {q:"Choose the best completion: “There is ___ in my backpack: a notebook and a pen.”",o:["something","anything","nothing","anyone"],a:0,e:"Something refers to one or more unspecified things in an affirmative sentence.",r:"THINGS: SOMETHING can refer to an unspecified thing or things.",t:"THINGS"},
+    {q:"Choose the best completion: “___ called me, but I don't know who it was.”",o:["Someone","No one","Everyone","Anywhere"],a:0,e:"Someone means an unspecified person.",r:"PEOPLE: SOMEONE = an unspecified person.",t:"PEOPLE"},
+    {q:"Choose the best completion: “___ in the class got the same instruction.”",o:["Everyone","No one","Someone","Somewhere"],a:0,e:"Everyone refers to all members of the class.",r:"PEOPLE: EVERYONE = all people in the group.",t:"PEOPLE"},
+    {q:"Which pair is matched correctly?",o:["somewhere = an unspecified place","nothing = all things","everyone = no person","nowhere = every place"],a:0,e:"Somewhere is used for an unspecified place. The other definitions are reversed or incorrect.",r:"REVIEW: MATCH THE PRONOUN WITH ITS MEANING.",t:"REVIEW"}
+  ];
+
+  const App = {
+    screen: 'home',
+    previousScreen: 'home',
+    mode: null,
+    round: null,
+    drawTimer: null,
+    transitionBusy: false,
+    async go(screen){
+      if(this.transitionBusy || this.screen===screen) return;
+      this.transitionBusy = true;
+      Sound.ensure();
+      Sound.click();
+      document.body.classList.add('transitioning');
+      await sleep(300);
+      $$('.screen').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(screen);
+      if(target){ target.classList.add('active','enter-left'); setTimeout(()=>target.classList.remove('enter-left'),720); }
+      this.previousScreen = this.screen;
+      this.screen = screen;
+      await sleep(260);
+      document.body.classList.remove('transitioning');
+      this.transitionBusy = false;
+      UI.refreshChrome();
+    },
+    back(){ this.go(this.previousScreen === 'modes' || this.previousScreen === 'class' || this.previousScreen === 'settings' ? 'home' : 'home'); }
+  };
+
+  const Storage = {
+    key:'wordshift9_stats_v1',
+    read(){ try{return JSON.parse(localStorage.getItem(this.key))||{};}catch(e){return{};} },
+    data(){ return Object.assign({bestScore:0,bestStreak:0,games:0,answered:0}, this.read()); },
+    save(patch){ const d=Object.assign(this.data(),patch); try{localStorage.setItem(this.key,JSON.stringify(d));}catch(e){} return d; },
+    reset(){ try{localStorage.removeItem(this.key);}catch(e){} },
+    updateView(){ const d=this.data(); $('#gamesStat').textContent=pad(d.games); $('#answeredStat').textContent=pad(d.answered); }
+  };
+
+  const Score = {
+    points:0, correct:0, wrong:0, streak:0, bestStreak:0, total:0,
+    reset(){this.points=0;this.correct=0;this.wrong=0;this.streak=0;this.bestStreak=0;this.total=0;},
+    accuracy(){return this.total ? Math.round(this.correct/this.total*100) : 100;},
+    award(base=100,speedBonus=0){this.streak++; this.bestStreak=Math.max(this.bestStreak,this.streak); const comboBonus=this.streak>1 ? Math.min(300,(this.streak-1)*25) : 0; const gain=base+speedBonus+comboBonus; this.points+=gain; return gain;},
+    miss(){this.wrong++;this.total++;this.streak=0;},
+    hit(){this.correct++;this.total++;},
+    missCount(){this.total++;}
+  };
+
+  const Sound = {
+    ctx:null, master:1, musicOn:true, soundOn:true, musicStarted:false, timerTickAt:0,
+    music(){return $('#bgMusic');},
+    ensure(){
+      const C = window.AudioContext || window.webkitAudioContext;
+      if(C && !this.ctx){
+        this.ctx=new C();
+      }
+      if(this.ctx && this.ctx.state==='suspended') this.ctx.resume();
+      this.tryStartMusic();
+    },
+    tryStartMusic(){
+      const audio=this.music();
+      if(!audio || !this.musicOn || this.musicStarted) return;
+      const src=(audio.getAttribute('src')||'').trim();
+      if(!src || src==='COLE_A_URL_DIRETA_DA_MUSICA_AQUI' || src.includes('youtube.com') || src.includes('youtu.be') || src.includes('spotify.com')) return;
+      audio.volume=clamp(parseFloat($('#musicLevel')?.value ?? 30)/100,.0,.4);
+      const promise=audio.play();
+      if(promise && typeof promise.then==='function'){
+        promise.then(()=>{this.musicStarted=true;}).catch(()=>{ /* Browser autoplay policy: retry on the next user interaction. */ });
+      }else{
+        this.musicStarted=true;
+      }
+    },
+    tone(freq,duration=.08,type='square',gain=.035,detune=0){
+      if(!this.soundOn || !this.ctx) return;
+      const o=this.ctx.createOscillator(), g=this.ctx.createGain(); o.type=type;o.frequency.value=freq;o.detune.value=detune;g.gain.value=gain;o.connect(g);g.connect(this.ctx.destination);const now=this.ctx.currentTime;g.gain.setValueAtTime(gain,now);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.start(now);o.stop(now+duration+.01);
+    },
+    click(){this.tone(160,.055,'square',.026);this.tone(410,.045,'triangle',.022);},
+    hover(){this.tone(520,.045,'triangle',.012);},
+    correct(){this.tone(420,.07,'triangle',.035);setTimeout(()=>this.tone(640,.12,'sine',.03),45);setTimeout(()=>this.tone(900,.1,'sine',.02),95);},
+    wrong(){this.tone(130,.16,'sawtooth',.035);setTimeout(()=>this.tone(80,.16,'square',.025),80);},
+    combo(){this.tone(600,.07,'square',.03);setTimeout(()=>this.tone(840,.08,'triangle',.025),55);setTimeout(()=>this.tone(1060,.11,'triangle',.02),110);},
+    roulette(){this.tone(180+Math.random()*260,.035,'square',.016);},
+    selected(){this.tone(220,.09,'square',.035);setTimeout(()=>this.tone(440,.13,'triangle',.035),55);setTimeout(()=>this.tone(660,.18,'sine',.025),110);},
+    timer(){const now=performance.now();if(now-this.timerTickAt>450){this.timerTickAt=now;this.tone(880,.035,'square',.018);}},
+    finish(){this.tone(260,.12,'triangle',.025);setTimeout(()=>this.tone(390,.12,'triangle',.025),100);setTimeout(()=>this.tone(520,.2,'sine',.028),210);},
+    setSound(on){this.soundOn=on;},
+    setMusic(on){
+      this.musicOn=on;
+      const audio=this.music();
+      if(!audio) return;
+      if(on){
+        this.musicStarted=false;
+        this.tryStartMusic();
+      }else{
+        audio.pause();
+        audio.currentTime=0;
+        this.musicStarted=false;
+      }
+    },
+    setMusicLevel(v){
+      const audio=this.music();
+      if(audio) audio.volume=clamp(Number(v)/100,0,.4);
+    }
+  };
+
+  const Particles = {
+    burst(x,y,count=14,mode='normal'){
+      if(!State.motion)return;
+      const layer=$('#particleLayer');
+      for(let i=0;i<count;i++){
+        const p=document.createElement('span');p.className='particle';p.style.left=x+'px';p.style.top=y+'px';const ang=Math.random()*Math.PI*2,dist=30+Math.random()*100;p.style.setProperty('--dx',Math.cos(ang)*dist+'px');p.style.setProperty('--dy',Math.sin(ang)*dist+'px');p.style.width=p.style.height=(3+Math.random()*7)+'px';if(mode==='wrong')p.style.background='var(--red)';else if(mode==='combo')p.style.background='var(--lime)';layer.appendChild(p);setTimeout(()=>p.remove(),700);
+      }
+    }
+  };
+
+  const Draw = {
+    pool:[], used:[], last:null, cycleCount:0,
+    init(){this.refill(true);},
+    shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;},
+    refill(first=false){
+      this.pool=this.shuffle(players.slice());
+      if(!first && this.last && this.pool.length>1 && this.pool[0]===this.last){[this.pool[0],this.pool[1]]=[this.pool[1],this.pool[0]];}
+      this.used=[];this.cycleCount=0;UI.updateClassCycle();
+    },
+    next(){
+      if(!this.pool.length)this.refill(false);
+      const name=this.pool.shift();this.last=name;this.used.push(name);this.cycleCount++;UI.updateClassCycle();return name;
+    },
+    async reveal(){
+      const names=players.slice();const el=$('#drawName'), prog=$('#drawProgress'); const duration=1250; const start=performance.now(); let t=0; el.classList.add('rolling');
+      $('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / 21';
+      return new Promise(resolve=>{
+        const tick=(now)=>{t=now-start;const p=clamp(t/duration,0,1);const idx=Math.floor(Math.random()*names.length);el.textContent=names[idx].toUpperCase();prog.style.width=(p*100)+'%';if(Math.random()<.5)Sound.roulette();if(p<1){requestAnimationFrame(tick);}else{el.classList.remove('rolling');const chosen=this.next();el.textContent=chosen.toUpperCase();prog.style.width='100%';Sound.selected();Particles.burst(window.innerWidth/2,window.innerHeight/2,26,'combo');el.animate([{transform:'skewX(-9deg) scale(1.22)',filter:'blur(3px)'},{transform:'skewX(-9deg) scale(1)',filter:'blur(0)'}],{duration:520,easing:'cubic-bezier(.16,1,.3,1)'});$('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / 21';setTimeout(()=>resolve(chosen),720);}};requestAnimationFrame(tick);
+      });
+    }
+  };
+
+  const State = {motion:true};
+
+  const Quiz = {
+    questions:[],index:0,mode:null,player:null,locked:false,timerId:null,timeLeft:0,timePerQ:12,answeredThisRun:0,typeTimer:null,
+    start(mode,player){
+      this.mode=mode;this.player=player;this.index=0;this.locked=false;this.timerId=null;this.answeredThisRun=0;Score.reset();
+      const count = mode==='endless' ? Infinity : (mode==='study' ? 16 : (mode==='streak' ? 25 : 20));
+      const batch = this.shuffleQuestions(Q);
+      this.questions = Number.isFinite(count) ? batch.slice(0, Math.min(count,Q.length)) : batch;
+      this.goal=count;
+      $('#timerWrap').classList.toggle('show',mode==='time');
+      $('#qTotal').textContent='/ '+(Number.isFinite(count)?count:'∞');
+      // The first draw is a real player selection, not a visual-only fake.
+      App.go('drawScreen').then(async ()=>{
+        const chosen = player || await Draw.reveal();
+        this.player = chosen;
+        $('#quizPlayer').textContent=chosen.toUpperCase();
+        $('#drawName').textContent='—'; $('#drawProgress').style.width='0%';
+        await App.go('quiz');
+        this.render();
+      });
+    },
+    shuffleQuestions(arr){return Draw.shuffle(arr.map(q=>({...q,o:[...q.o]})));},
+    buildOptions(q){const opts=q.o.map((text,i)=>({text,correct:i===q.a}));Draw.shuffle(opts);return opts;},
+    render(){
+      if(this.mode==='endless' && this.index>=this.questions.length){
+        const last = this.questions[this.questions.length-1];
+        const batch = this.shuffleQuestions(Q).filter(q=>!last || q.q!==last.q);
+        this.questions.push(...batch);
+      }
+      if(this.index>=this.questions.length){this.finish();return;}
+      this.locked=false;this.stopTimer();$('#studyNote').classList.remove('show');
+      const q=this.questions[this.index]; const opts=this.buildOptions(q);
+      const progressGoal=Number.isFinite(this.goal)?this.goal:Math.max(this.index+1,20);
+      $('#qIndex').textContent=pad(this.index+1);$('#qTotal').textContent='/ '+(Number.isFinite(this.goal)?this.goal:'∞');
+      $('#progressBar').style.width=(Number.isFinite(this.goal)?((this.index)/this.goal*100):0)+'%';
+      $('#questionTag').textContent=(q.t||'ENGLISH')+' // '+(this.mode==='study'?'REVIEW':'SELECT ONE');
+      const passage=$('#passage');
+      if(q.q.includes('Text:')){const parts=q.q.split('\n');passage.hidden=false;passage.innerHTML=escapeHTML(parts[0].replace('Text: ',''));}else{passage.hidden=true;passage.innerHTML='';}
+      const cleanQ=q.q.includes('\n')?q.q.split('\n')[1]:q.q;$('#questionText').textContent=cleanQ;
+      const grid=$('#answerGrid');grid.innerHTML='';
+      opts.forEach((opt,i)=>{const b=document.createElement('button');b.className='answer';b.dataset.correct=opt.correct?'1':'0';b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span class="txt"></span>`;$('.txt',b).textContent=opt.text;b.addEventListener('mouseenter',()=>Sound.hover(),{once:false});b.addEventListener('click',()=>this.answer(i,b,q));grid.appendChild(b);});
+      $('#quizScore').textContent=fmtScore(Score.points);$('#quizStreak').textContent=pad(Score.streak);$('#quizAccuracy').textContent=Score.accuracy()+'%';$('#quizQuestions').textContent=pad(this.answeredThisRun);
+      typeIn($('#questionText'), {speed:13});
+      if(this.mode==='time')this.startTimer();
+    },
+    answer(index,btn,q,timeout=false){
+      if(this.locked)return;this.locked=true;this.stopTimer();
+      const buttons=$$('.answer');buttons.forEach(b=>b.classList.add('lock'));
+      const isCorrect=!timeout && btn && btn.dataset.correct==='1';
+      if(isCorrect){
+        buttons.forEach(b=>{if(b.dataset.correct==='1')b.classList.add('correct');else b.classList.add('dim')});
+        const speedBonus=this.mode==='time'?Math.round(this.timeLeft*9):0;Score.hit();const gain=Score.award(100,speedBonus);$('#quizScore').textContent=fmtScore(Score.points);$('#quizStreak').textContent=pad(Score.streak);$('#quizAccuracy').textContent=Score.accuracy()+'%';$('#quizQuestions').textContent=pad(this.answeredThisRun+1);$('#streakBox').classList.toggle('fire',true);setTimeout(()=>$('#streakBox').classList.remove('fire'),650);
+        if(Score.streak>1)Sound.combo(); else Sound.correct();Feedback.show('CORRECT','correct');Particles.burst(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+btn.offsetHeight/2,22,'combo');floatScore('+'+gain,btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top);
+        this.answeredThisRun++;Storage.save({answered:Storage.data().answered+1,bestScore:Math.max(Storage.data().bestScore,Score.points),bestStreak:Math.max(Storage.data().bestStreak,Score.bestStreak)});
+        if(this.mode==='study'){this.showStudy(q);setTimeout(()=>this.next(),1400);}else setTimeout(()=>this.next(),720);
+      }else{
+        buttons.forEach(b=>{if(b.dataset.correct==='1')b.classList.add('correct');else if(b===btn)b.classList.add('wrong');else b.classList.add('dim')});
+        Score.miss();$('#quizStreak').textContent='00';$('#quizAccuracy').textContent=Score.accuracy()+'%';$('#quizQuestions').textContent=pad(this.answeredThisRun+1);Sound.wrong();Feedback.show('WRONG','wrong');Particles.burst(btn?btn.getBoundingClientRect().left+btn.offsetWidth/2:window.innerWidth/2,btn?btn.getBoundingClientRect().top:window.innerHeight/2,18,'wrong');this.answeredThisRun++;Storage.save({answered:Storage.data().answered+1,bestScore:Math.max(Storage.data().bestScore,Score.points),bestStreak:Math.max(Storage.data().bestStreak,Score.bestStreak)});
+        if(this.mode==='endless'){setTimeout(()=>this.finish(),880);}else if(this.mode==='study'){this.showStudy(q);setTimeout(()=>this.next(),1600);}else setTimeout(()=>this.next(),880);
+      }
+    },
+    async next(){
+      this.index++;
+      if((this.mode==='streak' && this.index>=25) || (this.mode!=='endless' && this.index>=this.questions.length)){this.finish();return;}
+      // Every answered question returns to the PLAYER DRAW screen.
+      await App.go('drawScreen');
+      const chosen=await Draw.reveal();
+      this.player=chosen;
+      $('#quizPlayer').textContent=chosen.toUpperCase();
+      $('#drawName').textContent='—'; $('#drawProgress').style.width='0%';
+      await App.go('quiz');
+      this.render();
+    },
+    showStudy(q){$('#studyExplain').textContent=q.e;$('#studyRule').textContent=q.r;$('#studyNote').classList.add('show');},
+    startTimer(){this.timeLeft=this.timePerQ;const wrap=$('#timerWrap');wrap.classList.remove('low');$('#timerBar').style.width='100%';$('#timerNumber').textContent=this.timeLeft.toFixed(1);this.timerId=setInterval(()=>{this.timeLeft-=.1;this.timeLeft=Math.max(0,this.timeLeft);$('#timerBar').style.width=(this.timeLeft/this.timePerQ*100)+'%';$('#timerNumber').textContent=this.timeLeft.toFixed(1);if(this.timeLeft<=3 && this.timeLeft>0){wrap.classList.add('low');Sound.timer();}if(this.timeLeft<=0){this.stopTimer();const correctBtn=$('.answer[data-correct="1"]');this.answer(-1,correctBtn,this.questions[this.index],true);}},100);},
+    stopTimer(){if(this.timerId){clearInterval(this.timerId);this.timerId=null;}},
+    finish(){this.stopTimer();const d=Storage.save({games:Storage.data().games+1,bestScore:Math.max(Storage.data().bestScore,Score.points),bestStreak:Math.max(Storage.data().bestStreak,Score.bestStreak)});$('#resultScore').textContent=fmtScore(Score.points);$('#resultAccuracy').textContent=Score.accuracy()+'%';$('#resultStreak').textContent=pad(Score.bestStreak);$('#resultCorrect').textContent=pad(Score.correct);$('#resultWrong').textContent=pad(Score.wrong);Storage.updateView();Sound.finish();App.go('result');}
+  };
+
+  const Feedback = {
+    show(word,kind){const e=$('#feedbackWord');e.className='feedback-word '+kind;e.textContent=word;e.classList.remove('show');void e.offsetWidth;e.classList.add('show');}
+  };
+
+  const Menu = {
+    init(){
+      $$('.menu-item').forEach((b)=>{b.addEventListener('mouseenter',()=>Sound.hover());b.addEventListener('click',()=>App.go(b.dataset.screen));});
+      $$('[data-back]').forEach(b=>b.addEventListener('click',()=>App.go(b.dataset.back)));
+      $$('.mode-card').forEach(b=>{b.addEventListener('mouseenter',()=>Sound.hover());b.addEventListener('click',()=>this.pickMode(b.dataset.mode));});
+      $('#retryBtn').addEventListener('click',()=>this.pickMode(Quiz.mode||'normal'));
+      $('#modeBtn').addEventListener('click',()=>App.go('modes'));
+      $('#homeBtn').addEventListener('click',()=>App.go('home'));
+    },
+    async pickMode(mode){
+      Sound.ensure();Sound.click();Quiz.start(mode);
+    }
+  };
+
+  const UI = {
+    init(){
+      $('#soundToggle').addEventListener('click',()=>{Sound.ensure();Sound.setSound(!Sound.soundOn);$('#soundToggle').classList.toggle('on',Sound.soundOn);this.toast(Sound.soundOn?'SOUND ON':'SOUND OFF');});
+      $('#musicToggle').addEventListener('click',()=>{Sound.ensure();Sound.setMusic(!Sound.musicOn);$('#musicToggle').classList.toggle('on',Sound.musicOn);this.toast(Sound.musicOn?'MUSIC ON':'MUSIC OFF');});
+      $('#motionToggle').addEventListener('click',()=>{State.motion=!State.motion;$('#motionToggle').classList.toggle('on',State.motion);this.toast(State.motion?'MOTION ON':'MOTION LOW');});
+      $('#musicLevel').addEventListener('input',e=>{$('#musicLevelLabel').textContent=e.target.value+'%';Sound.setMusicLevel(+e.target.value);});
+      $('#resetStats').addEventListener('click',()=>{Storage.reset();Storage.updateView();$('#cycleBar').style.width='0%';this.toast('LOCAL RECORDS RESET');Sound.click();});
+      this.buildClass();Storage.updateView();
+    },
+    buildClass(){const grid=$('#classGrid');grid.innerHTML='';players.forEach((p,i)=>{const b=document.createElement('div');b.className='student';b.style.setProperty('--i',i);b.innerHTML=`<span class="idx">${String(i+1).padStart(2,'0')}</span><span class="name"></span><span class="mark">${String(i+1).padStart(2,'0')}</span>`;$('.name',b).textContent=p;grid.appendChild(b);});},
+    updateClassCycle(){const count=Draw.cycleCount;$('#cycleStat').textContent=pad(count)+' / 21';$('#cycleBar').style.width=(count/players.length*100)+'%';$('#drawCount').textContent='PLAYERS '+pad(count)+' / 21';},
+    toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(this.toastTimer);this.toastTimer=setTimeout(()=>t.classList.remove('show'),1200)},
+    refreshChrome(){const labels={home:'SYSTEM READY',modes:'MODE SELECT',class:'CLASS ROSTER',settings:'SYSTEM',drawScreen:'PLAYER DRAW',quiz:'QUIZ ACTIVE',result:'SESSION COMPLETE'};$('#topClock').textContent=labels[App.screen]||'WORD/SHIFT';}
+  };
+
+  function typeIn(el,opts={}){const text=el.textContent;if(!text)return;if(el._typeTimer)clearInterval(el._typeTimer);const speed=opts.speed||15;el.dataset.fullText=text;let i=0;el.textContent='';el._typeTimer=setInterval(()=>{el.textContent=text.slice(0,++i);if(i>=text.length){clearInterval(el._typeTimer);el._typeTimer=null;}},speed);}
+  function escapeHTML(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+  function floatScore(text,x,y){const e=document.createElement('div');e.className='score-float';e.textContent=text;document.body.appendChild(e);e.style.left=x+'px';e.style.top=y+'px';setTimeout(()=>e.remove(),850)}
+
+  /* Canvas background / parallax geometry */
+  const CanvasFX = {
+    canvas:$('#bgCanvas'),ctx:$('#bgCanvas').getContext('2d'),particles:[],w:innerWidth,h:innerHeight,px:0,py:0,
+    init(){this.resize();for(let i=0;i<50;i++)this.add(true);window.addEventListener('resize',()=>this.resize());window.addEventListener('pointermove',e=>{this.px=(e.clientX/innerWidth-.5);this.py=(e.clientY/innerHeight-.5);});this.loop();},
+    resize(){this.w=this.canvas.width=innerWidth*devicePixelRatio;this.h=this.canvas.height=innerHeight*devicePixelRatio;this.ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);this.cssW=innerWidth;this.cssH=innerHeight;},
+    add(initial=false){this.particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*2+.5,v:Math.random()*.14+.025,a:Math.random()*.6+.15,phase:Math.random()*Math.PI*2});},
+    loop(){const c=this.ctx; c.clearRect(0,0,innerWidth,innerHeight);if(!State.motion){requestAnimationFrame(()=>this.loop());return;}
+      const t=performance.now()/1000; c.save();c.globalAlpha=.34;c.lineWidth=1;
+      for(let i=0;i<9;i++){let y=(i/9*innerHeight + (t*5+i*17))%innerHeight; c.beginPath();c.moveTo(-30,y);c.lineTo(innerWidth+40,y-70);c.strokeStyle='rgba(117,218,255,.08)';c.stroke();}
+      c.globalAlpha=.7;for(const p of this.particles){p.y-=p.v;p.x+=Math.sin(t+p.phase)*.08;if(p.y< -10){p.y=innerHeight+10;p.x=Math.random()*innerWidth;}c.fillStyle='rgba(220,250,255,'+p.a+')';c.fillRect(p.x,p.y,p.s,p.s);}c.restore();requestAnimationFrame(()=>this.loop());}
+  };
+
+  /* Custom cursor */
+  const Cursor={init(){const c=$('#cursor');let raf=0,x=innerWidth/2,y=innerHeight/2,tx=x,ty=y;const move=e=>{tx=e.clientX;ty=e.clientY;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{x+=(tx-x)*.45;y+=(ty-y)*.45;c.style.left=x+'px';c.style.top=y+'px';});};window.addEventListener('pointermove',move);document.addEventListener('mouseover',e=>{if(e.target.closest('button,input'))c.classList.add('active');});document.addEventListener('mouseout',e=>{if(e.target.closest('button,input'))c.classList.remove('active');});if(matchMedia('(pointer:coarse)').matches)document.body.classList.add('touch');}}
+
+  /* keyboard shortcuts */
+  const Keys={init(){window.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;if(e.key==='Escape'){if($('#modal').classList.contains('show'))$('#modal').classList.remove('show');else if(App.screen==='quiz'){Quiz.stopTimer();App.go('home');}}
+    if(App.screen==='quiz' && !Quiz.locked){const idx={'1':0,'2':1,'3':2,'4':3}[e.key];if(idx!==undefined){const b=$$('.answer')[idx];if(b)b.click();}}
+  });}}
+
+  function boot(){Draw.init();Menu.init();UI.init();CanvasFX.init();Cursor.init();Keys.init();UI.refreshChrome();const unlockAudio=()=>Sound.ensure();document.addEventListener('pointerdown',unlockAudio,{once:true});document.addEventListener('keydown',unlockAudio,{once:true});document.addEventListener('touchstart',unlockAudio,{once:true,passive:true});Sound.ensure();}
+  boot();
+})();
+</script>
+</body>
+</html>
