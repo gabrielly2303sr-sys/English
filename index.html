@@ -117,9 +117,9 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 .screen.active .student{animation:studentIn .4s var(--ease) forwards;animation-delay:calc(var(--i)*28ms + 80ms)}
 @keyframes studentIn{to{opacity:1;transform:none}}
 .student:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform .25s var(--ease)}
-.student:hover{background:rgba(17,54,151,.92);filter:brightness(1.08)}.student:hover:before{transform:scaleY(1)}
+.student:hover{background:rgba(17,54,151,.92);filter:brightness(1.08)}.student:hover:before{transform:scaleY(1)}.student-remove{position:absolute;right:7px;top:6px;width:22px;height:22px;border:0;background:transparent;color:rgba(255,255,255,.42);font-size:20px;line-height:1;cursor:pointer;opacity:0;transform:rotate(-6deg) scale(.8);transition:opacity .2s,transform .2s,color .2s}.student:hover .student-remove{opacity:1;transform:none}.student-remove:hover{color:var(--red);transform:scale(1.15)!important}
 .student .idx{display:block;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.45);margin-bottom:5px}.student .name{font-weight:900;font-size:16px;letter-spacing:.03em}.student .mark{position:absolute;right:8px;bottom:-9px;font-family:var(--display);font-size:48px;opacity:.08}
-.class-meta{padding:25px;display:flex;flex-direction:column;justify-content:space-between}
+.class-meta{padding:25px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;overflow:auto}.class-meta-top{flex:0 0 auto}.roster-editor{border-top:1px solid rgba(255,255,255,.16);padding-top:15px}.roster-title{font-family:var(--display);font-size:25px;line-height:.85;transform:skewX(-7deg)}.roster-sub{font-size:8px;letter-spacing:.2em;font-weight:900;opacity:.56;margin:11px 0 6px}.roster-add{display:grid;grid-template-columns:1fr auto;gap:6px}.roster-add input,.roster-editor textarea{width:100%;border:1px solid rgba(255,255,255,.25);background:rgba(2,11,52,.42);color:#fff;font-family:var(--ui);font-size:12px;font-weight:800;letter-spacing:.04em;padding:9px 10px;outline:none;resize:vertical}.roster-add input:focus,.roster-editor textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(22,207,255,.12)}.roster-add input::placeholder,.roster-editor textarea::placeholder{color:rgba(255,255,255,.38)}.roster-mini-btn,.roster-btn{border:0;background:#fff;color:var(--ink);font-family:var(--display);font-size:15px;cursor:pointer;transform:skewX(-9deg);padding:8px 12px;transition:transform .24s var(--ease),filter .2s}.roster-mini-btn:hover,.roster-btn:hover{transform:skewX(-9deg) translateY(-3px);filter:brightness(1.05)}.roster-editor textarea{min-height:90px;line-height:1.45}.paste-label{margin-top:13px}.roster-actions{display:flex;gap:6px;margin-top:7px}.roster-btn{font-size:14px;flex:1}.roster-btn.danger-lite{background:var(--red);color:#fff}.roster-hint{font-size:9px;line-height:1.35;letter-spacing:.04em;opacity:.52;margin-top:8px}
 .class-meta .big{font-family:var(--display);font-size:clamp(76px,9vw,120px);line-height:.7;color:#fff;opacity:.95}.class-meta p{font-size:12px;line-height:1.7;font-weight:900;color:#dbfaff}.class-stat{margin-top:16px}.stat-line{display:flex;justify-content:space-between;font-size:10px;font-weight:900;letter-spacing:.16em;margin:8px 0}.stat-track{height:7px;background:rgba(255,255,255,.2);transform:skewX(-18deg)}.stat-track i{display:block;height:100%;background:var(--cyan);width:0;transition:width 1.2s var(--ease)}
 
 /* SETTINGS */
@@ -218,11 +218,11 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 
 /* RESPONSIVE */
 @media (max-width:980px){
-  .modes-grid{grid-template-columns:repeat(2,1fr);height:68vh;overflow:auto;padding-right:3px}.mode-card{min-height:29vh}.mode-card:last-child{grid-column:1/-1}.class-layout{grid-template-columns:1fr;height:69vh}.class-meta{display:none}.class-grid{grid-template-columns:repeat(2,1fr)}.home-readout{display:none}.result-layout{grid-template-columns:1fr;overflow:auto}.result-main{min-height:44vh}.result-side{min-height:28vh}.result-actions{padding-bottom:20px}
+  .modes-grid{grid-template-columns:repeat(2,1fr);height:68vh;overflow:auto;padding-right:3px}.mode-card{min-height:29vh}.mode-card:last-child{grid-column:1/-1}.class-layout{grid-template-columns:1fr;height:69vh;overflow:auto}.class-meta{display:flex;max-height:69vh}.class-grid{grid-template-columns:repeat(2,1fr)}.home-readout{display:none}.result-layout{grid-template-columns:1fr;overflow:auto}.result-main{min-height:44vh}.result-side{min-height:28vh}.result-actions{padding-bottom:20px}
 }
 @media (max-width:700px){
   .screen{padding:8vh 5vw 4vh}.brand-stack{left:7vw;top:12vh;max-width:88vw}.brand-title{font-size:clamp(56px,18vw,100px)}.brand-sub{font-size:12px;line-height:1.5}.menu-wrap{left:6vw;bottom:9vh;gap:3px}.menu-item{min-width:86vw;padding:9px 8px}.menu-item .label{font-size:34px}.menu-item .mini{display:none}.view-header{margin-bottom:20px}.view-title{font-size:62px}.top-right{display:none}.topline{left:5vw;right:5vw}
-  .modes-grid{grid-template-columns:1fr;height:70vh}.mode-card{min-height:24vh}.mode-card:last-child{grid-column:auto}.class-grid{grid-template-columns:1fr}.class-list{padding-right:3px}.class-layout{height:71vh}.settings-panel{padding:18px}.setting-label{font-size:22px}.range{width:120px}.timer-wrap{min-width:150px}.quiz-top{grid-template-columns:1fr auto}.score-chip{display:none}.quiz-index{font-size:9px}.quiz-index strong{font-size:20px}.question-text{font-size:clamp(27px,8vw,52px)}.answer-grid{grid-template-columns:1fr;margin-top:18px}.answer{min-height:58px}.study-note{position:relative;top:auto;right:auto;width:100%;margin-top:15px}.quiz-bottom{align-items:flex-end}.quiz-stats{gap:9px}.stat{min-width:64px}.stat b{font-size:22px}.stat label{font-size:7px}.draw-card{width:92vw;padding:35px 5vw 40px}.draw-name{font-size:clamp(52px,14vw,88px)}
+  .modes-grid{grid-template-columns:1fr;height:70vh}.mode-card{min-height:24vh}.mode-card:last-child{grid-column:auto}.class-grid{grid-template-columns:1fr}.class-list{padding-right:3px}.class-layout{height:71vh;overflow:auto}.class-meta{display:flex;max-height:48vh;padding:16px}.class-meta-top .big{font-size:64px}.roster-editor{padding-top:11px}.roster-editor textarea{min-height:72px}.settings-panel{padding:18px}.setting-label{font-size:22px}.range{width:120px}.timer-wrap{min-width:150px}.quiz-top{grid-template-columns:1fr auto}.score-chip{display:none}.quiz-index{font-size:9px}.quiz-index strong{font-size:20px}.question-text{font-size:clamp(27px,8vw,52px)}.answer-grid{grid-template-columns:1fr;margin-top:18px}.answer{min-height:58px}.study-note{position:relative;top:auto;right:auto;width:100%;margin-top:15px}.quiz-bottom{align-items:flex-end}.quiz-stats{gap:9px}.stat{min-width:64px}.stat b{font-size:22px}.stat label{font-size:7px}.draw-card{width:92vw;padding:35px 5vw 40px}.draw-name{font-size:clamp(52px,14vw,88px)}
   .result-side{grid-template-columns:1fr 1fr}.result-stat{padding:18px}.result-stat b{font-size:44px}.result-actions{flex-wrap:wrap}.result-button{font-size:18px}.noise{opacity:.05}
 }
 @media (pointer:coarse){body.touch .menu-item:hover,.touch .mode-card:hover,.touch .answer:hover{transform:none}.touch .menu-item:after{transition:none}}
@@ -231,7 +231,7 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 <body>
 <div id="app" class="">
   <!-- External background music. Replace only the placeholder with a direct .mp3/.wav/.ogg URL. -->
-  <audio id="bgMusic" preload="auto" loop playsinline src="Color%20Your%20Night.mp3"></audio>
+  <audio id="bgMusic" preload="none" loop playsinline src="COLE_A_URL_DIRETA_DA_MUSICA_AQUI"></audio>
   <canvas id="bgCanvas"></canvas>
   <div class="bg-wash"></div>
   <div class="geo a"></div><div class="geo b"></div><div class="geo c"></div><div class="geo d"></div>
@@ -278,7 +278,19 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
       <div class="view-header"><div><div class="view-kicker">PARTICIPANTS // CURRENT POOL</div><h1 class="view-title">CLASS</h1></div><button class="back-btn" data-back="home"><span>← BACK</span></button></div>
       <div class="class-layout">
         <div class="panel class-list"><div class="class-grid" id="classGrid"></div></div>
-        <aside class="panel class-meta"><div><div class="big">21</div><p>PLAYER SIGNALS ONLINE.<br>THE DRAW SYSTEM rotates through the full class before repeating whenever possible.</p></div><div class="class-stat"><div class="stat-line"><span>CURRENT CYCLE</span><b id="cycleStat">00 / 21</b></div><div class="stat-track"><i id="cycleBar"></i></div><div class="stat-line"><span>GAMES PLAYED</span><b id="gamesStat">00</b></div><div class="stat-line"><span>QUESTIONS ANSWERED</span><b id="answeredStat">00</b></div></div></aside>
+        <aside class="panel class-meta">
+          <div class="class-meta-top"><div class="big" id="classCount">21</div><p>PLAYER SIGNALS ONLINE.<br>THE DRAW SYSTEM rotates through the full class before repeating whenever possible.</p></div>
+          <div class="class-stat"><div class="stat-line"><span>CURRENT CYCLE</span><b id="cycleStat">00 / 21</b></div><div class="stat-track"><i id="cycleBar"></i></div><div class="stat-line"><span>GAMES PLAYED</span><b id="gamesStat">00</b></div><div class="stat-line"><span>QUESTIONS ANSWERED</span><b id="answeredStat">00</b></div></div>
+          <div class="roster-editor">
+            <div class="roster-title">EDIT ROSTER</div>
+            <div class="roster-sub">ADD ONE PLAYER</div>
+            <div class="roster-add"><input id="playerNameInput" type="text" maxlength="40" placeholder="PLAYER NAME" autocomplete="off"><button id="addPlayerBtn" class="roster-mini-btn" type="button">ADD</button></div>
+            <div class="roster-sub paste-label">PASTE A FULL BLOCK</div>
+            <textarea id="playerBulkInput" rows="5" maxlength="5000" placeholder="Paste names here — one per line, or separated by commas / semicolons. Numbering and bullets are cleaned automatically."></textarea>
+            <div class="roster-actions"><button id="importPlayersBtn" class="roster-btn" type="button">IMPORT</button><button id="clearPlayersBtn" class="roster-btn danger-lite" type="button">REMOVE ALL</button></div>
+            <div class="roster-hint" id="rosterHint">Changes are saved locally and update the draw pool immediately.</div>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -370,7 +382,27 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
     "Aabe", "Moisés", "Victor", "Eliabe", "Camila", "Gabi", "Maria Clara", "Maria Júlia", "Mariana", "Emilly", "as Gêmeas", "Anne", "Caio", "Ana Júlia", "Lívia", "Geovana.C", "J.Gabriel", "Geovanna.M", "Conrado", "Lavinia", "Saymon"
   ];
 
-  /* Question bank — 48 questions, mixed reading + indefinite pronouns. */
+  function applyRoster(list){
+    const cleaned=[...new Set((list||[]).map(v=>String(v).trim()).filter(Boolean))];
+    players.splice(0,players.length,...cleaned);
+  }
+
+  function parsePlayers(raw){
+    const text=String(raw||'').replace(/\r/g,'').trim();
+    if(!text)return [];
+    let parts=text.split(/\n+/).map(v=>v.trim()).filter(Boolean);
+    if(parts.length===1) parts=text.split(/[;,]+/).map(v=>v.trim()).filter(Boolean);
+    const names=[];
+    for(let part of parts){
+      part=part.replace(/^[\s•●○▪▫◦*]+/,'').trim();
+      part=part.replace(/^\s*(?:\d+|[A-Za-z])\s*[.)\-:]\s*/,'');
+      part=part.replace(/^["']|["']$/g,'').trim();
+      if(part)names.push(part);
+    }
+    return [...new Set(names)];
+  }
+
+  /* Question bank — 150 questions, mixed reading + indefinite pronouns. */
   const Q = [
     {q:"There is ___ in the classroom. I can see a student in one of the back seats.",o:["somewhere","everywhere","nowhere","anywhere"],a:0,e:"Somewhere refers to an unspecified place. We know the person is in a place, but we do not know which one.",r:"PLACES: SOMEWHERE = an unspecified place (usually in affirmative sentences).",t:"PLACES"},
     {q:"Did you go ___ after school?",o:["somewhere","nowhere","everywhere","anything"],a:0,e:"In questions about an unspecified place, somewhere is possible when the speaker expects a positive answer.",r:"PLACES: SOMEWHERE can appear in questions when a positive answer is expected.",t:"PLACES"},
@@ -421,7 +453,107 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
     {q:"Choose the best completion: “There is ___ in my backpack: a notebook and a pen.”",o:["something","anything","nothing","anyone"],a:0,e:"Something refers to one or more unspecified things in an affirmative sentence.",r:"THINGS: SOMETHING can refer to an unspecified thing or things.",t:"THINGS"},
     {q:"Choose the best completion: “___ called me, but I don't know who it was.”",o:["Someone","No one","Everyone","Anywhere"],a:0,e:"Someone means an unspecified person.",r:"PEOPLE: SOMEONE = an unspecified person.",t:"PEOPLE"},
     {q:"Choose the best completion: “___ in the class got the same instruction.”",o:["Everyone","No one","Someone","Somewhere"],a:0,e:"Everyone refers to all members of the class.",r:"PEOPLE: EVERYONE = all people in the group.",t:"PEOPLE"},
-    {q:"Which pair is matched correctly?",o:["somewhere = an unspecified place","nothing = all things","everyone = no person","nowhere = every place"],a:0,e:"Somewhere is used for an unspecified place. The other definitions are reversed or incorrect.",r:"REVIEW: MATCH THE PRONOUN WITH ITS MEANING.",t:"REVIEW"}
+    {q:"Which pair is matched correctly?",o:["somewhere = an unspecified place","nothing = all things","everyone = no person","nowhere = every place"],a:0,e:"Somewhere is used for an unspecified place. The other definitions are reversed or incorrect.",r:"REVIEW: MATCH THE PRONOUN WITH ITS MEANING.",t:"REVIEW"},
+    {"q":"The students need to meet ___. The teacher has not chosen the exact room yet.","o":["somewhere","anywhere","nowhere","everywhere"],"a":0,"e":"Somewhere refers to an unspecified place.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"I checked ___ in my room for the missing charger: the desk, bed, and shelf.","o":["somewhere","everywhere","anywhere","nowhere"],"a":1,"e":"Everywhere refers to all the possible places in the context.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"There was ___ open in the building after midnight.","o":["somewhere","anywhere","nowhere","everywhere"],"a":2,"e":"Nowhere means there was no available place.","r":"PLACES: NOWHERE = no place.","t":"PLACES"},
+    {"q":"You may put your backpack ___. Just do not block the door.","o":["somewhere","nowhere","everywhere","anywhere"],"a":3,"e":"Anywhere means any place that is allowed.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"Let's go ___ quiet after lunch to finish the project.","o":["somewhere","anywhere","nowhere","everywhere"],"a":0,"e":"Somewhere names an unspecified place.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"The dog ran ___ when the gate opened, so we had to look in every part of the yard.","o":["somewhere","everywhere","anywhere","nowhere"],"a":1,"e":"Everywhere means in all places.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"We could find ___ to park near the stadium, so we took the bus.","o":["somewhere","anywhere","nowhere","everywhere"],"a":2,"e":"Nowhere means not in any place.","r":"PLACES: NOWHERE = no place.","t":"PLACES"},
+    {"q":"Did you leave your notebook ___ in the library?","o":["somewhere","nowhere","everywhere","anywhere"],"a":3,"e":"Anywhere is common in questions about an unspecified place.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"The posters were ___ during the school festival: hallways, doors, and windows.","o":["everywhere","somewhere","anywhere","nowhere"],"a":0,"e":"Everywhere describes all around the area.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"I do not want to sit ___. The room is too noisy.","o":["somewhere","anywhere","nowhere","everywhere"],"a":1,"e":"Anywhere is natural after a negative statement.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"There is ___ in this building where we can charge the tablet, but I do not know which room.","o":["anywhere","nowhere","somewhere","everywhere"],"a":2,"e":"Somewhere indicates one unspecified place.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"After searching ___, Maya finally found her pencil case behind the curtain.","o":["somewhere","anywhere","nowhere","everywhere"],"a":3,"e":"The sentence says she searched through all the possible places.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"There is ___ safe to cross this river here; we need to use the bridge.","o":["nowhere","somewhere","anywhere","everywhere"],"a":0,"e":"Nowhere means there is no suitable place.","r":"PLACES: NOWHERE = no place.","t":"PLACES"},
+    {"q":"Is there ___ near school where we can buy a notebook?","o":["anywhere","somewhere","nowhere","everywhere"],"a":1,"e":"Somewhere fits a question asking about an unspecified possible place.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"The child drew stars ___ on the page, leaving almost no blank space.","o":["somewhere","anywhere","everywhere","nowhere"],"a":2,"e":"Everywhere means in all parts of the page.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"We could not sit ___ because every chair was wet.","o":["somewhere","nowhere","everywhere","anywhere"],"a":3,"e":"Anywhere is used after the negative could not.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"They looked ___ for the missing jersey before the match.","o":["everywhere","somewhere","anywhere","nowhere"],"a":0,"e":"Everywhere means they checked all possible places.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"I put the spare key ___ in the kitchen, but I forgot exactly where.","o":["anywhere","somewhere","nowhere","everywhere"],"a":1,"e":"Somewhere refers to an unknown exact location.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"There is ___ to hide in this small room.","o":["somewhere","anywhere","nowhere","everywhere"],"a":2,"e":"Nowhere means no place is available.","r":"PLACES: NOWHERE = no place.","t":"PLACES"},
+    {"q":"You can read ___ in the school library as long as you are quiet.","o":["somewhere","nowhere","everywhere","anywhere"],"a":3,"e":"Anywhere means any place in the library.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"The rainwater was ___ after the storm, even along the sidewalks.","o":["everywhere","somewhere","anywhere","nowhere"],"a":0,"e":"Everywhere indicates all around the area.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"Did you see my blue pen ___ on the table or under the books?","o":["somewhere","anywhere","nowhere","everywhere"],"a":1,"e":"Anywhere is common in a question about an unspecified location.","r":"PLACES: ANYWHERE = any place, especially in questions or negatives.","t":"PLACES"},
+    {"q":"We need to find ___ warm to wait for the bus.","o":["anywhere","nowhere","somewhere","everywhere"],"a":2,"e":"Somewhere refers to an unspecified place to wait.","r":"PLACES: SOMEWHERE = an unspecified place.","t":"PLACES"},
+    {"q":"There was ___ to buy food at the tiny station after the shops closed.","o":["somewhere","anywhere","everywhere","nowhere"],"a":3,"e":"Nowhere means no place was available.","r":"PLACES: NOWHERE = no place.","t":"PLACES"},
+    {"q":"I looked ___ except inside the old box, and that was where the letter was.","o":["everywhere","somewhere","anywhere","nowhere"],"a":0,"e":"Everywhere describes the broad search across the possible places.","r":"PLACES: EVERYWHERE = all places.","t":"PLACES"},
+    {"q":"___ left a water bottle on the desk, but I do not know who it was.","o":["someone","anyone","no one","everyone"],"a":0,"e":"Someone means one unspecified person.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"Did ___ answer the phone?","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone is common in questions about any person.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ in the team practiced before the game; every member was there.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone refers to all people in the group.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"___ knew where the new classroom was, so we asked the teacher.","o":["someone","anyone","everyone","no one"],"a":3,"e":"No one means not a single person.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"I think ___ is waiting outside for you.","o":["someone","anyone","no one","everyone"],"a":0,"e":"Someone indicates an unspecified person.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"Can ___ help me carry these books?","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone can refer to any person who may be able to help.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ in the audience stood up when the music started.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone means all people in the audience.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"We asked five students, but ___ had the correct answer.","o":["someone","anyone","everyone","no one"],"a":3,"e":"No one means zero people had the answer.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"___ sent this message, but the name is hidden.","o":["someone","anyone","no one","everyone"],"a":0,"e":"Someone means an unspecified person sent it.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"Has ___ seen my glasses?","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone is natural in this question.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ needs to bring a pencil tomorrow.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone refers to all students in the group.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"There was ___ at the bus stop because the bus had already left.","o":["someone","anyone","everyone","no one"],"a":3,"e":"No one means there were no people there.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"___ knocked on the classroom door during the test.","o":["someone","anyone","no one","everyone"],"a":0,"e":"Someone refers to one unknown person.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"If ___ has a question, raise a hand.","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone means any person in the group.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ in the club received the same schedule.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone means all members of the club.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"I called the office twice, but ___ answered.","o":["someone","anyone","everyone","no one"],"a":3,"e":"No one means not one person answered.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"___ is using the computer next to mine.","o":["someone","anyone","no one","everyone"],"a":0,"e":"Someone refers to an unspecified person.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"Could ___ explain this word to me?","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone is common in questions asking whether a person can help.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ in our class has a different role for the presentation.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone means all members have a role.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"___ remembered the password, so the teacher reset it.","o":["someone","anyone","everyone","no one"],"a":3,"e":"No one means nobody remembered it.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"I heard a voice, but I could not see ___ clearly.","o":["anyone","someone","no one","everyone"],"a":0,"e":"Anyone can be used in a negative statement about any person.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ can join the study group after school.","o":["someone","anyone","no one","everyone"],"a":1,"e":"Anyone means any person who wants to join.","r":"PEOPLE: ANYONE = any person; common in questions and negatives.","t":"PEOPLE"},
+    {"q":"___ in the room was ready when the bell rang.","o":["someone","anyone","everyone","no one"],"a":2,"e":"Everyone means all the people in the room.","r":"PEOPLE: EVERYONE = all people.","t":"PEOPLE"},
+    {"q":"The note says “___ left a gift for you,” but it gives no name.","o":["anyone","no one","everyone","someone"],"a":3,"e":"Someone identifies an unknown person.","r":"PEOPLE: SOMEONE = one unspecified person.","t":"PEOPLE"},
+    {"q":"We waited for ten minutes, but ___ arrived.","o":["no one","someone","anyone","everyone"],"a":0,"e":"No one means nobody arrived.","r":"PEOPLE: NO ONE = not one person.","t":"PEOPLE"},
+    {"q":"There is ___ in the drawer, but I cannot remember what it is.","o":["something","anything","nothing","everything"],"a":0,"e":"Something refers to an unspecified thing.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"Did you buy ___ for the project?","o":["something","anything","nothing","everything"],"a":1,"e":"Anything is common in questions.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"There is ___ in the fridge; we need to go shopping.","o":["something","anything","nothing","everything"],"a":2,"e":"Nothing means not a single thing.","r":"THINGS: NOTHING = no thing.","t":"THINGS"},
+    {"q":"She packed ___ she needed for the trip.","o":["something","anything","nothing","everything"],"a":3,"e":"Everything means all the things she needed.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"Would you like ___ to eat before class?","o":["something","anything","nothing","everything"],"a":0,"e":"Something is common in offers.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"I did not hear ___ during the announcement.","o":["something","anything","nothing","everything"],"a":1,"e":"Anything is common after a negative verb.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"He knows ___ about the rules because he read the whole guide.","o":["something","anything","everything","nothing"],"a":2,"e":"Everything means all the relevant things.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"There is ___ on the floor. It looks like a coin.","o":["anything","nothing","everything","something"],"a":3,"e":"Something refers to an unspecified object.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"We found ___ in the lost-and-found box. It was completely empty.","o":["nothing","something","anything","everything"],"a":0,"e":"Nothing means no thing was there.","r":"THINGS: NOTHING = no thing.","t":"THINGS"},
+    {"q":"Is there ___ I can do to help?","o":["something","anything","nothing","everything"],"a":1,"e":"Anything is natural in this question.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"I wrote ___ down because the teacher gave three important instructions.","o":["something","anything","everything","nothing"],"a":2,"e":"Everything means all the important things were written down.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"She does not want ___ from the store.","o":["something","nothing","everything","anything"],"a":3,"e":"Anything is used after the negative does not want.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"There is ___ strange about this picture, but I cannot explain it.","o":["something","anything","nothing","everything"],"a":0,"e":"Something means one unspecified thing.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"The box contains ___ we need for the experiment.","o":["something","everything","anything","nothing"],"a":1,"e":"Everything refers to all needed items.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"I opened the bag and found ___.","o":["something","anything","nothing","everything"],"a":2,"e":"Nothing means the bag contained no thing.","r":"THINGS: NOTHING = no thing.","t":"THINGS"},
+    {"q":"Did ___ happen while I was away?","o":["something","nothing","everything","anything"],"a":3,"e":"Anything fits a question asking about any event or thing.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"We talked about ___ in the chapter, from the first page to the last.","o":["everything","something","anything","nothing"],"a":0,"e":"Everything means all the content or things discussed.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"There is not ___ left in my bottle.","o":["something","anything","nothing","everything"],"a":1,"e":"Anything commonly follows not.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"He wants to tell you ___.","o":["anything","nothing","something","everything"],"a":2,"e":"Something refers to an unspecified piece of information.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"I checked my notes, but I found ___ about the homework deadline.","o":["something","anything","everything","nothing"],"a":3,"e":"Nothing means there was no information in the notes.","r":"THINGS: NOTHING = no thing.","t":"THINGS"},
+    {"q":"Is there ___ else we should bring?","o":["anything","something","nothing","everything"],"a":0,"e":"Anything is common in a question about an additional item.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"The students cleaned ___ before leaving the room.","o":["something","everything","anything","nothing"],"a":1,"e":"Everything means all the things/areas they needed to clean.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"She did not say ___.","o":["something","nothing","anything","everything"],"a":2,"e":"Anything is natural after did not say.","r":"THINGS: ANYTHING = any thing; common in questions and negatives.","t":"THINGS"},
+    {"q":"I need ___ to write with. My pencil is broken.","o":["anything","nothing","everything","something"],"a":3,"e":"Something refers to an unspecified writing object.","r":"THINGS: SOMETHING = an unspecified thing; common in affirmative sentences and offers.","t":"THINGS"},
+    {"q":"The teacher explained ___ clearly, so the class had no questions.","o":["everything","something","anything","nothing"],"a":0,"e":"Everything means all the material was explained.","r":"THINGS: EVERYTHING = all things.","t":"THINGS"},
+    {"q":"Text: “Ella had a science project due Friday. She searched somewhere quiet in the library and worked for an hour.”\nWhere did Ella work?","o":["In a quiet place in the library","At the stadium","On a bus","At home"],"a":0,"e":"The passage says Ella searched for a quiet place in the library and worked there.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Ben could not find his keys. He looked everywhere in the house, but the keys were nowhere there. Later, he found them in his backpack.”\nWhere were the keys?","o":["Under the bed","In his backpack","In the kitchen","At school"],"a":1,"e":"The final sentence says he found the keys in his backpack.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Lia asked, ‘Is there anywhere near the park to get water?’ Her brother pointed to a small shop.”\nWhat did Lia want to find?","o":["A new park","A bus stop","A place to get water","A classroom"],"a":2,"e":"Her question asks about a place near the park where she could get water.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “After the concert, everyone in the group walked to the station. No one stayed behind.”\nWho walked to the station?","o":["Only the teacher","No one","One student","Everyone in the group"],"a":3,"e":"The passage says everyone walked to the station.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The classroom was empty. There was nothing on the teacher’s desk except a blue marker.”\nWhat was on the desk?","o":["A blue marker","A notebook","A phone","Nothing at all"],"a":0,"e":"The text says there was nothing except a blue marker.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Rui wanted somewhere to study, so he went to the school garden. It was quiet, and nobody was talking.”\nWhy did Rui go to the garden?","o":["He wanted to play soccer","He wanted a place to study","He needed to buy food","He was looking for a bus"],"a":1,"e":"The passage directly says Rui wanted somewhere to study.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Everyone brought something for the class picnic. Nina brought fruit, Paulo brought juice, and Leo brought sandwiches.”\nWhat did everyone bring?","o":["A notebook","A jacket","Something for the picnic","A ball"],"a":2,"e":"The first sentence says everyone brought something for the picnic.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Maya called three friends, but no one answered because they were in class.”\nWhy did no one answer?","o":["They were at home","The phone was broken","They were sleeping","They were in class"],"a":3,"e":"The passage gives the reason: they were in class.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The teacher said, ‘You can sit anywhere during the group activity.’ The students chose different tables.”\nWhat did the teacher allow?","o":["Students could choose any place to sit","Students had to sit at one table","Students had to leave the room","Students could not move"],"a":0,"e":"Anywhere means any place, so students could choose a table.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Sam opened the cupboard and found nothing useful for the project. He went to the store.”\nWhat did Sam find in the cupboard?","o":["Everything he needed","Nothing useful","A computer","A map"],"a":1,"e":"The passage explicitly says he found nothing useful.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Julia looked everywhere for her headphones. She checked the sofa, bedroom, kitchen, and desk.”\nWhat does “everywhere” suggest?","o":["She checked one place","She did not look","She checked many possible places","She went outside"],"a":2,"e":"Everywhere means all or many places in the situation.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Someone left a note on the classroom door. It said, ‘Meeting at 3 p.m.’ The writer did not sign it.”\nWhat is unknown?","o":["What time the meeting is","Where the note is","What the note says","Who wrote the note"],"a":3,"e":"The note has no signature, so the writer is unknown.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Is there somewhere nearby with free Wi-Fi? Ana asked. The librarian pointed upstairs.”\nWhat was Ana looking for?","o":["A nearby place with free Wi-Fi","A teacher","A bus ticket","A new book"],"a":0,"e":"Ana asked about a place nearby with free Wi-Fi.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Nothing was ready when the students arrived, so they prepared the room together.”\nWhat did the students do?","o":["They went home","They prepared the room","They took a test","They played outside"],"a":1,"e":"The passage says they prepared the room together.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Everyone in the club received a badge. Carlos checked his name on the list before taking one.”\nWho received a badge?","o":["Only Carlos","Nobody","Everyone in the club","Only the teacher"],"a":2,"e":"The first sentence states that everyone in the club received a badge.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “I searched my desk and backpack, but I could not find my calculator anywhere. Then I remembered it was in the computer room.”\nWhere was the calculator?","o":["On the desk","In the backpack","At home","In the computer room"],"a":3,"e":"The final sentence tells where it was.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The coach told the players to meet somewhere near the gym. He would send the exact room later.”\nWhy did he say “somewhere”?","o":["The exact room was not decided or shared yet","He wanted everyone to stay home","There was no gym","He named a specific room"],"a":0,"e":"Somewhere is used because the exact location is not specified.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “No one in the line complained. Everyone waited quietly for the doors to open.”\nHow did the people behave?","o":["They left the line","They waited quietly","They complained","They started running"],"a":1,"e":"The passage says everyone waited quietly and no one complained.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The box looked empty, but there was something under the paper at the bottom.”\nWhat was in the box?","o":["Nothing","A phone on top","Something under the paper","Everything from the shelf"],"a":2,"e":"The passage says there was something under the paper.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Tom asked if anyone needed help. Two students raised their hands.”\nWhat does “anyone” mean in the question?","o":["All people","No person","One specific person","Any person"],"a":3,"e":"Anyone means any person and is common in questions.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The hallway was decorated everywhere with blue and white paper for the school event.”\nWhat does “everywhere” tell us?","o":["The decorations were all around the hallway","There were no decorations","Only one wall was decorated","The decorations were outside"],"a":0,"e":"Everywhere means the decorations were spread through all parts of the hallway.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Sara packed everything she needed: a notebook, two pens, and a bottle of water.”\nWhat did Sara pack?","o":["Only a notebook","All the things she needed","Nothing","A school uniform"],"a":1,"e":"Everything means all the necessary things.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The library was closed, so there was nowhere to study there. The students went to the cafeteria instead.”\nWhy did the students leave the library?","o":["Everyone was sleeping","There was a test","There was nowhere to study there","Someone called them"],"a":2,"e":"The library was closed, so it was not a place available for studying.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “Did you see anyone in the hallway?” Leo asked. Mia answered, “No, I didn’t see anyone.”\nDid Mia see a person?","o":["Yes, she saw Leo","Yes, she saw a teacher","She saw everyone","No, she did not"],"a":3,"e":"Mia explicitly says she did not see anyone.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"},
+    {"q":"Text: “The teacher explained everything again because some students were absent during the first explanation.”\nWhy did the teacher explain everything again?","o":["Some students were absent before","The room was empty","The students finished early","Nobody asked a question"],"a":0,"e":"The passage gives that as the reason for repeating the explanation.","r":"READING: Use the details stated in the passage and check the meaning of the indefinite pronoun in context.","t":"READING"}
   ];
 
   const App = {
@@ -453,10 +585,13 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 
   const Storage = {
     key:'wordshift9_stats_v1',
+    rosterKey:'wordshift9_roster_v1',
     read(){ try{return JSON.parse(localStorage.getItem(this.key))||{};}catch(e){return{};} },
     data(){ return Object.assign({bestScore:0,bestStreak:0,games:0,answered:0}, this.read()); },
     save(patch){ const d=Object.assign(this.data(),patch); try{localStorage.setItem(this.key,JSON.stringify(d));}catch(e){} return d; },
     reset(){ try{localStorage.removeItem(this.key);}catch(e){} },
+    loadRoster(){ try{const saved=JSON.parse(localStorage.getItem(this.rosterKey)); if(Array.isArray(saved)) applyRoster(saved);}catch(e){} },
+    saveRoster(list){ try{localStorage.setItem(this.rosterKey,JSON.stringify(list));}catch(e){} },
     updateView(){ const d=this.data(); $('#gamesStat').textContent=pad(d.games); $('#answeredStat').textContent=pad(d.answered); }
   };
 
@@ -541,6 +676,7 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
     pool:[], used:[], last:null, cycleCount:0,
     init(){this.refill(true);},
     shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;},
+    reset(){this.pool=[];this.used=[];this.last=null;this.cycleCount=0;this.refill(true);},
     refill(first=false){
       this.pool=this.shuffle(players.slice());
       if(!first && this.last && this.pool.length>1 && this.pool[0]===this.last){[this.pool[0],this.pool[1]]=[this.pool[1],this.pool[0]];}
@@ -548,13 +684,16 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
     },
     next(){
       if(!this.pool.length)this.refill(false);
-      const name=this.pool.shift();this.last=name;this.used.push(name);this.cycleCount++;UI.updateClassCycle();return name;
+      const name=this.pool.shift();if(!name)return null;
+      this.last=name;this.used.push(name);this.cycleCount++;UI.updateClassCycle();return name;
     },
     async reveal(){
-      const names=players.slice();const el=$('#drawName'), prog=$('#drawProgress'); const duration=1250; const start=performance.now(); let t=0; el.classList.add('rolling');
-      $('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / 21';
+      const names=players.slice();
+      if(!names.length)return null;
+      const el=$('#drawName'), prog=$('#drawProgress'); const duration=1250; const start=performance.now(); let t=0; el.classList.add('rolling');
+      $('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / '+players.length;
       return new Promise(resolve=>{
-        const tick=(now)=>{t=now-start;const p=clamp(t/duration,0,1);const idx=Math.floor(Math.random()*names.length);el.textContent=names[idx].toUpperCase();prog.style.width=(p*100)+'%';if(Math.random()<.5)Sound.roulette();if(p<1){requestAnimationFrame(tick);}else{el.classList.remove('rolling');const chosen=this.next();el.textContent=chosen.toUpperCase();prog.style.width='100%';Sound.selected();Particles.burst(window.innerWidth/2,window.innerHeight/2,26,'combo');el.animate([{transform:'skewX(-9deg) scale(1.22)',filter:'blur(3px)'},{transform:'skewX(-9deg) scale(1)',filter:'blur(0)'}],{duration:520,easing:'cubic-bezier(.16,1,.3,1)'});$('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / 21';setTimeout(()=>resolve(chosen),720);}};requestAnimationFrame(tick);
+        const tick=(now)=>{t=now-start;const p=clamp(t/duration,0,1);const idx=Math.floor(Math.random()*names.length);el.textContent=names[idx].toUpperCase();prog.style.width=(p*100)+'%';if(Math.random()<.5)Sound.roulette();if(p<1){requestAnimationFrame(tick);}else{el.classList.remove('rolling');const chosen=this.next();if(!chosen){resolve(null);return;}el.textContent=chosen.toUpperCase();prog.style.width='100%';Sound.selected();Particles.burst(window.innerWidth/2,window.innerHeight/2,26,'combo');el.animate([{transform:'skewX(-9deg) scale(1.22)',filter:'blur(3px)'},{transform:'skewX(-9deg) scale(1)',filter:'blur(0)'}],{duration:520,easing:'cubic-bezier(.16,1,.3,1)'});$('#drawCount').textContent='PLAYERS '+pad(this.cycleCount)+' / '+players.length;setTimeout(()=>resolve(chosen),720);}};requestAnimationFrame(tick);
       });
     }
   };
@@ -574,6 +713,7 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
       // The first draw is a real player selection, not a visual-only fake.
       App.go('drawScreen').then(async ()=>{
         const chosen = player || await Draw.reveal();
+        if(!chosen){App.go('class');UI.toast('NO PLAYERS IN ROSTER');return;}
         this.player = chosen;
         $('#quizPlayer').textContent=chosen.toUpperCase();
         $('#drawName').textContent='—'; $('#drawProgress').style.width='0%';
@@ -627,6 +767,7 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
       // Every answered question returns to the PLAYER DRAW screen.
       await App.go('drawScreen');
       const chosen=await Draw.reveal();
+      if(!chosen){App.go('class');UI.toast('NO PLAYERS IN ROSTER');return;}
       this.player=chosen;
       $('#quizPlayer').textContent=chosen.toUpperCase();
       $('#drawName').textContent='—'; $('#drawProgress').style.width='0%';
@@ -653,7 +794,9 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
       $('#homeBtn').addEventListener('click',()=>App.go('home'));
     },
     async pickMode(mode){
-      Sound.ensure();Sound.click();Quiz.start(mode);
+      Sound.ensure();
+      if(!players.length){this.toast('ADD AT LEAST 1 PLAYER IN CLASS');Sound.wrong();return;}
+      Sound.click();Quiz.start(mode);
     }
   };
 
@@ -664,10 +807,71 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
       $('#motionToggle').addEventListener('click',()=>{State.motion=!State.motion;$('#motionToggle').classList.toggle('on',State.motion);this.toast(State.motion?'MOTION ON':'MOTION LOW');});
       $('#musicLevel').addEventListener('input',e=>{$('#musicLevelLabel').textContent=e.target.value+'%';Sound.setMusicLevel(+e.target.value);});
       $('#resetStats').addEventListener('click',()=>{Storage.reset();Storage.updateView();$('#cycleBar').style.width='0%';this.toast('LOCAL RECORDS RESET');Sound.click();});
-      this.buildClass();Storage.updateView();
+      Storage.loadRoster();this.buildClass();Storage.updateView();this.bindRosterEditor();this.updateClassCycle();
     },
-    buildClass(){const grid=$('#classGrid');grid.innerHTML='';players.forEach((p,i)=>{const b=document.createElement('div');b.className='student';b.style.setProperty('--i',i);b.innerHTML=`<span class="idx">${String(i+1).padStart(2,'0')}</span><span class="name"></span><span class="mark">${String(i+1).padStart(2,'0')}</span>`;$('.name',b).textContent=p;grid.appendChild(b);});},
-    updateClassCycle(){const count=Draw.cycleCount;$('#cycleStat').textContent=pad(count)+' / 21';$('#cycleBar').style.width=(count/players.length*100)+'%';$('#drawCount').textContent='PLAYERS '+pad(count)+' / 21';},
+    bindRosterEditor(){
+      $('#addPlayerBtn').addEventListener('click',()=>this.addPlayerFromInput());
+      $('#playerNameInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();this.addPlayerFromInput();}});
+      $('#importPlayersBtn').addEventListener('click',()=>this.importPlayers());
+      $('#clearPlayersBtn').addEventListener('click',()=>this.clearPlayers());
+    },
+    addPlayerFromInput(){
+      const input=$('#playerNameInput');const name=String(input.value||'').trim();
+      if(!name){this.toast('TYPE A NAME FIRST');return;}
+      if(players.some(p=>p.localeCompare(name,undefined,{sensitivity:'accent'})===0)){this.toast('PLAYER ALREADY EXISTS');return;}
+      players.push(name);Storage.saveRoster(players);Draw.reset();this.buildClass();this.toast('PLAYER ADDED // '+name.toUpperCase());Sound.click();input.value='';
+    },
+    importPlayers(){
+      const raw=$('#playerBulkInput').value;const parsed=parsePlayers(raw);
+      if(!parsed.length){this.toast('NO PLAYER NAMES FOUND');return;}
+      const existing=new Set(players.map(p=>p.toLocaleLowerCase()));
+      const added=parsed.filter(name=>{const key=name.toLocaleLowerCase();if(existing.has(key))return false;existing.add(key);return true;});
+      if(!added.length){this.toast('ALL NAMES ALREADY EXIST');return;}
+      players.push(...added);Storage.saveRoster(players);Draw.reset();this.buildClass();$('#playerBulkInput').value='';this.toast('IMPORTED '+added.length+' PLAYERS');Sound.selected();
+    },
+    removePlayer(index){
+      const name=players[index];if(!name)return;
+      players.splice(index,1);Storage.saveRoster(players);Draw.reset();this.buildClass();this.toast('REMOVED // '+name.toUpperCase());Sound.click();
+    },
+    clearPlayers(){
+      // Clear immediately so the control works reliably even in browsers/previews
+      // that block or suppress native confirm() dialogs.
+      if(!players.length){this.toast('ROSTER ALREADY EMPTY');return;}
+      players.splice(0,players.length);
+      Storage.saveRoster(players);
+      Draw.reset();
+      this.buildClass();
+      $('#playerNameInput').value='';
+      $('#playerBulkInput').value='';
+      this.toast('ROSTER CLEARED');
+      Sound.wrong();
+    },
+    refreshRosterTexts(){
+      const total=players.length;
+      $('#classCount').textContent=total;
+      $$('.menu-item[data-screen="class"] .mini').forEach(el=>el.textContent=total+' PLAYERS');
+    },
+    buildClass(){
+      const grid=$('#classGrid');grid.innerHTML='';
+      players.forEach((p,i)=>{
+        const b=document.createElement('div');b.className='student';b.style.setProperty('--i',i);
+        b.innerHTML=`<span class="idx">${String(i+1).padStart(2,'0')}</span><span class="name"></span><span class="mark">${String(i+1).padStart(2,'0')}</span><button class="student-remove" type="button" aria-label="Remove player">×</button>`;
+        $('.name',b).textContent=p;
+        $('.student-remove',b).addEventListener('click',()=>this.removePlayer(i));
+        grid.appendChild(b);
+      });
+      $('#classCount').textContent=players.length;
+      $('#gamesStat').textContent=pad(Storage.data().games);
+      $('#answeredStat').textContent=pad(Storage.data().answered);
+      this.refreshRosterTexts();
+    },
+    updateClassCycle(){
+      const count=Draw.cycleCount,total=players.length;
+      $('#cycleStat').textContent=pad(count)+' / '+total;
+      $('#cycleBar').style.width=(total?count/total*100:0)+'%';
+      $('#drawCount').textContent='PLAYERS '+pad(count)+' / '+total;
+      this.refreshRosterTexts();
+    },
     toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(this.toastTimer);this.toastTimer=setTimeout(()=>t.classList.remove('show'),1200)},
     refreshChrome(){const labels={home:'SYSTEM READY',modes:'MODE SELECT',class:'CLASS ROSTER',settings:'SYSTEM',drawScreen:'PLAYER DRAW',quiz:'QUIZ ACTIVE',result:'SESSION COMPLETE'};$('#topClock').textContent=labels[App.screen]||'WORD/SHIFT';}
   };
@@ -696,7 +900,7 @@ button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
     if(App.screen==='quiz' && !Quiz.locked){const idx={'1':0,'2':1,'3':2,'4':3}[e.key];if(idx!==undefined){const b=$$('.answer')[idx];if(b)b.click();}}
   });}}
 
-  function boot(){Draw.init();Menu.init();UI.init();CanvasFX.init();Cursor.init();Keys.init();UI.refreshChrome();const unlockAudio=()=>Sound.ensure();document.addEventListener('pointerdown',unlockAudio,{once:true});document.addEventListener('keydown',unlockAudio,{once:true});document.addEventListener('touchstart',unlockAudio,{once:true,passive:true});Sound.ensure();}
+  function boot(){Storage.loadRoster();Draw.init();Menu.init();UI.init();CanvasFX.init();Cursor.init();Keys.init();UI.refreshChrome();const unlockAudio=()=>Sound.ensure();document.addEventListener('pointerdown',unlockAudio,{once:true});document.addEventListener('keydown',unlockAudio,{once:true});document.addEventListener('touchstart',unlockAudio,{once:true,passive:true});Sound.ensure();}
   boot();
 })();
 </script>
